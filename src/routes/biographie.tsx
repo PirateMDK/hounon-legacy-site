@@ -1,0 +1,95 @@
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { useQuery } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
+import Page from "@/components/Page";
+import heroPortrait from "@/assets/hero-portrait.jpg";
+
+export const Route = createFileRoute("/biographie")({
+  head: () => ({ meta: [{ title: "Biographie — Hounon Propre" }, { name: "description", content: "Parcours et lignée du maître spirituel KINWAHO HOUNGUEVI DJIMA." }] }),
+  component: BiographyPage,
+});
+
+function BiographyPage() {
+  const { data: bio } = useQuery({
+    queryKey: ["bio"],
+    queryFn: async () => {
+      const { data } = await supabase.from("site_content").select("value").eq("key", "biography").maybeSingle();
+      return (data?.value as { text?: string })?.text ?? "";
+    },
+  });
+  const { data: timeline } = useQuery({
+    queryKey: ["timeline"],
+    queryFn: async () => {
+      const { data } = await supabase.from("timeline_milestones").select("*").order("sort_order");
+      return data ?? [];
+    },
+  });
+  const { data: vodouns } = useQuery({
+    queryKey: ["vodouns-all"],
+    queryFn: async () => {
+      const { data } = await supabase.from("vodouns").select("*").eq("visible", true).order("sort_order");
+      return data ?? [];
+    },
+  });
+
+  return (
+    <Page>
+      <section className="px-6 py-20 mx-auto max-w-5xl">
+        <div className="flex flex-col items-center text-center">
+          <div className="pulse-ring w-64 h-64 rounded-full overflow-hidden border-2 border-gold/50 mb-8">
+            <img src={heroPortrait} alt="Hounon Propre" className="w-full h-full object-cover" />
+          </div>
+          <h1 className="font-display text-4xl md:text-5xl gold-text">KINWAHO HOUNGUEVI DJIMA</h1>
+          <p className="font-italic-serif text-2xl text-sand mt-2">dit Hounon Propre</p>
+          <p className="text-gold mt-2 uppercase tracking-widest text-sm">Maître Spirituel · Prêtre Vodoun · Guérisseur Traditionnel</p>
+        </div>
+
+        <div className="gold-divider" />
+
+        <div className="prose prose-invert max-w-3xl mx-auto font-body text-ivory text-lg leading-relaxed text-justify">
+          {(bio ?? "").split("\n\n").map((p, i) => <p key={i} className="mb-4">{p}</p>)}
+        </div>
+
+        <div className="gold-divider" />
+
+        <h2 className="section-title">Parcours</h2>
+        <div className="max-w-2xl mx-auto mt-12 space-y-6">
+          {(timeline ?? []).map((m) => (
+            <div key={m.id} className="flex gap-6 items-start">
+              <div className="font-display text-gold text-xl min-w-[80px]">{m.year}</div>
+              <div className="text-ivory border-l border-gold/40 pl-6">{m.description}</div>
+            </div>
+          ))}
+        </div>
+
+        <div className="gold-divider" />
+
+        <div id="vodouns">
+          <h2 className="section-title">Ses Vodouns Tutélaires</h2>
+          <p className="font-italic-serif text-sand text-center max-w-3xl mx-auto mt-6">
+            Hounon Propre est consacré à plusieurs divinités vodoun. Voici celles dont la présence guide son travail. D'autres vodouns compléteront cette liste.
+          </p>
+          <div className="grid md:grid-cols-2 gap-6 mt-12">
+            {(vodouns ?? []).map((v) => (
+              <div key={v.id} className="sacred-card">
+                <div className="text-5xl mb-4">{v.symbol}</div>
+                <h3 className="font-display text-2xl text-gold">{v.name}</h3>
+                {v.subtitle && <p className="font-italic-serif text-sand">{v.subtitle}</p>}
+                <p className="text-ivory/90 mt-4">{v.description}</p>
+              </div>
+            ))}
+            <div className="sacred-card flex flex-col items-center justify-center text-center border-dashed">
+              <div className="text-5xl text-gold mb-3">+</div>
+              <h3 className="font-display text-xl text-gold">Autres Vodouns</h3>
+              <p className="text-sand mt-3 font-italic-serif">À compléter depuis l'espace administrateur.</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="text-center mt-16">
+          <Link to="/contact" className="btn-primary">Prendre Rendez-vous</Link>
+        </div>
+      </section>
+    </Page>
+  );
+}
