@@ -1,6 +1,9 @@
 import { Link, useLocation, Outlet } from "@tanstack/react-router";
 import { useState } from "react";
 import { Menu, X, MessageCircle, Mail, MapPin } from "lucide-react";
+import logoCncvb from "@/assets/logo-cncvb.png";
+import logoMinistere from "@/assets/logo-ministere.png";
+import flagBenin from "@/assets/flag-benin.png";
 
 const NAV = [
   { to: "/", label: "Accueil" },
@@ -16,7 +19,7 @@ const NAV = [
 
 const WA_NUMBER = "22997375652";
 const WA_DISPLAY = "+229 97 37 56 52";
-const EMAIL = "hononpropre@gmail.com";
+const EMAIL = "hounonpropre@gmail.com";
 
 export function Header() {
   const { pathname } = useLocation();
@@ -61,6 +64,10 @@ export function Footer() {
           <p className="font-italic-serif text-sand text-sm">
             Là où la médecine moderne s'arrête,<br />la sagesse des ancêtres commence.
           </p>
+          <div className="mt-4 flex items-center gap-2 text-sand text-xs">
+            <img src={logoCncvb} alt="CNCVB-Racine" className="h-10 w-auto opacity-90" />
+            <span>CNCVB-Racine — Atlantique</span>
+          </div>
         </div>
         <div>
           <h4 className="text-gold mb-3">Navigation</h4>
@@ -75,12 +82,31 @@ export function Footer() {
           <ul className="space-y-2 text-sm text-sand">
             <li className="flex items-start gap-2"><MessageCircle size={16} className="mt-1 text-gold" /> {WA_DISPLAY}</li>
             <li className="flex items-start gap-2"><Mail size={16} className="mt-1 text-gold" /> {EMAIL}</li>
-            <li className="flex items-start gap-2"><MapPin size={16} className="mt-1 text-gold" /> Pahou Founoucodji, Bénin</li>
+            <li className="flex items-start gap-2">
+              <MapPin size={16} className="mt-1 text-gold" />
+              <span className="inline-flex items-center gap-2">
+                Pahou Founoucodji, Bénin
+                <img src={flagBenin} alt="Drapeau Bénin" className="h-[18px] w-auto rounded-sm" style={{ width: 28 }} />
+              </span>
+            </li>
           </ul>
         </div>
       </div>
+
+      <div className="mx-auto max-w-7xl px-6 mt-12">
+        <p className="text-center text-xs uppercase tracking-[0.25em] text-sand/70 mb-4">
+          Reconnaissance Officielle & Appartenance Nationale
+        </p>
+        <div className="flex flex-wrap items-center justify-center gap-8">
+          <img src={logoCncvb} alt="CNCVB-Racine" className="credibility-logo" />
+          <img src={logoMinistere} alt="Ministère du Tourisme, de la Culture et des Arts — République du Bénin" className="credibility-logo" style={{ height: 50 }} />
+          <img src={flagBenin} alt="Drapeau du Bénin" className="credibility-logo" style={{ height: 36 }} />
+        </div>
+      </div>
+
       <div className="mt-12 text-center text-xs text-sand/60">
-        © {new Date().getFullYear()} Hounon Propre — Tous droits réservés.
+        © {new Date().getFullYear()} Hounon Propre — Tous droits réservés. ·{" "}
+        <Link to="/admin" className="hover:text-gold">Admin</Link>
       </div>
     </footer>
   );
