@@ -25,6 +25,7 @@ import { Route as AdminServicesRouteImport } from './routes/admin.services'
 import { Route as AdminMediasRouteImport } from './routes/admin.medias'
 import { Route as AdminLoginRouteImport } from './routes/admin.login'
 import { Route as AdminFormationsRouteImport } from './routes/admin.formations'
+import { Route as AdminEvenementsRouteImport } from './routes/admin.evenements'
 import { Route as AdminDiplomesRouteImport } from './routes/admin.diplomes'
 import { Route as AdminContenuRouteImport } from './routes/admin.contenu'
 
@@ -108,6 +109,11 @@ const AdminFormationsRoute = AdminFormationsRouteImport.update({
   path: '/formations',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminEvenementsRoute = AdminEvenementsRouteImport.update({
+  id: '/evenements',
+  path: '/evenements',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminDiplomesRoute = AdminDiplomesRouteImport.update({
   id: '/diplomes',
   path: '/diplomes',
@@ -132,6 +138,7 @@ export interface FileRoutesByFullPath {
   '/temoignages': typeof TemoignagesRoute
   '/admin/contenu': typeof AdminContenuRoute
   '/admin/diplomes': typeof AdminDiplomesRoute
+  '/admin/evenements': typeof AdminEvenementsRoute
   '/admin/formations': typeof AdminFormationsRoute
   '/admin/login': typeof AdminLoginRoute
   '/admin/medias': typeof AdminMediasRoute
@@ -151,6 +158,7 @@ export interface FileRoutesByTo {
   '/temoignages': typeof TemoignagesRoute
   '/admin/contenu': typeof AdminContenuRoute
   '/admin/diplomes': typeof AdminDiplomesRoute
+  '/admin/evenements': typeof AdminEvenementsRoute
   '/admin/formations': typeof AdminFormationsRoute
   '/admin/login': typeof AdminLoginRoute
   '/admin/medias': typeof AdminMediasRoute
@@ -172,6 +180,7 @@ export interface FileRoutesById {
   '/temoignages': typeof TemoignagesRoute
   '/admin/contenu': typeof AdminContenuRoute
   '/admin/diplomes': typeof AdminDiplomesRoute
+  '/admin/evenements': typeof AdminEvenementsRoute
   '/admin/formations': typeof AdminFormationsRoute
   '/admin/login': typeof AdminLoginRoute
   '/admin/medias': typeof AdminMediasRoute
@@ -194,6 +203,7 @@ export interface FileRouteTypes {
     | '/temoignages'
     | '/admin/contenu'
     | '/admin/diplomes'
+    | '/admin/evenements'
     | '/admin/formations'
     | '/admin/login'
     | '/admin/medias'
@@ -213,6 +223,7 @@ export interface FileRouteTypes {
     | '/temoignages'
     | '/admin/contenu'
     | '/admin/diplomes'
+    | '/admin/evenements'
     | '/admin/formations'
     | '/admin/login'
     | '/admin/medias'
@@ -233,6 +244,7 @@ export interface FileRouteTypes {
     | '/temoignages'
     | '/admin/contenu'
     | '/admin/diplomes'
+    | '/admin/evenements'
     | '/admin/formations'
     | '/admin/login'
     | '/admin/medias'
@@ -368,6 +380,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminFormationsRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/evenements': {
+      id: '/admin/evenements'
+      path: '/evenements'
+      fullPath: '/admin/evenements'
+      preLoaderRoute: typeof AdminEvenementsRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/diplomes': {
       id: '/admin/diplomes'
       path: '/diplomes'
@@ -388,6 +407,7 @@ declare module '@tanstack/react-router' {
 interface AdminRouteChildren {
   AdminContenuRoute: typeof AdminContenuRoute
   AdminDiplomesRoute: typeof AdminDiplomesRoute
+  AdminEvenementsRoute: typeof AdminEvenementsRoute
   AdminFormationsRoute: typeof AdminFormationsRoute
   AdminLoginRoute: typeof AdminLoginRoute
   AdminMediasRoute: typeof AdminMediasRoute
@@ -399,6 +419,7 @@ interface AdminRouteChildren {
 const AdminRouteChildren: AdminRouteChildren = {
   AdminContenuRoute: AdminContenuRoute,
   AdminDiplomesRoute: AdminDiplomesRoute,
+  AdminEvenementsRoute: AdminEvenementsRoute,
   AdminFormationsRoute: AdminFormationsRoute,
   AdminLoginRoute: AdminLoginRoute,
   AdminMediasRoute: AdminMediasRoute,
