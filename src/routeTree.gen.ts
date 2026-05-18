@@ -17,7 +17,21 @@ import { Route as EvenementsRouteImport } from './routes/evenements'
 import { Route as DiplomesRouteImport } from './routes/diplomes'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as BiographieRouteImport } from './routes/biographie'
+import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AdminIndexRouteImport } from './routes/admin.index'
+import { Route as AdminVodounsRouteImport } from './routes/admin.vodouns'
+import { Route as AdminUtilisateursRouteImport } from './routes/admin.utilisateurs'
+import { Route as AdminTemoignagesRouteImport } from './routes/admin.temoignages'
+import { Route as AdminServicesRouteImport } from './routes/admin.services'
+import { Route as AdminParametresRouteImport } from './routes/admin.parametres'
+import { Route as AdminMessagesRouteImport } from './routes/admin.messages'
+import { Route as AdminMediasRouteImport } from './routes/admin.medias'
+import { Route as AdminLoginRouteImport } from './routes/admin.login'
+import { Route as AdminFormationsRouteImport } from './routes/admin.formations'
+import { Route as AdminEvenementsRouteImport } from './routes/admin.evenements'
+import { Route as AdminDiplomesRouteImport } from './routes/admin.diplomes'
+import { Route as AdminContenuRouteImport } from './routes/admin.contenu'
 
 const TemoignagesRoute = TemoignagesRouteImport.update({
   id: '/temoignages',
@@ -59,14 +73,85 @@ const BiographieRoute = BiographieRouteImport.update({
   path: '/biographie',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminIndexRoute = AdminIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminVodounsRoute = AdminVodounsRouteImport.update({
+  id: '/vodouns',
+  path: '/vodouns',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminUtilisateursRoute = AdminUtilisateursRouteImport.update({
+  id: '/utilisateurs',
+  path: '/utilisateurs',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminTemoignagesRoute = AdminTemoignagesRouteImport.update({
+  id: '/temoignages',
+  path: '/temoignages',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminServicesRoute = AdminServicesRouteImport.update({
+  id: '/services',
+  path: '/services',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminParametresRoute = AdminParametresRouteImport.update({
+  id: '/parametres',
+  path: '/parametres',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminMessagesRoute = AdminMessagesRouteImport.update({
+  id: '/messages',
+  path: '/messages',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminMediasRoute = AdminMediasRouteImport.update({
+  id: '/medias',
+  path: '/medias',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminLoginRoute = AdminLoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminFormationsRoute = AdminFormationsRouteImport.update({
+  id: '/formations',
+  path: '/formations',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminEvenementsRoute = AdminEvenementsRouteImport.update({
+  id: '/evenements',
+  path: '/evenements',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminDiplomesRoute = AdminDiplomesRouteImport.update({
+  id: '/diplomes',
+  path: '/diplomes',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminContenuRoute = AdminContenuRouteImport.update({
+  id: '/contenu',
+  path: '/contenu',
+  getParentRoute: () => AdminRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRouteWithChildren
   '/biographie': typeof BiographieRoute
   '/contact': typeof ContactRoute
   '/diplomes': typeof DiplomesRoute
@@ -75,6 +160,19 @@ export interface FileRoutesByFullPath {
   '/medias': typeof MediasRoute
   '/services': typeof ServicesRoute
   '/temoignages': typeof TemoignagesRoute
+  '/admin/contenu': typeof AdminContenuRoute
+  '/admin/diplomes': typeof AdminDiplomesRoute
+  '/admin/evenements': typeof AdminEvenementsRoute
+  '/admin/formations': typeof AdminFormationsRoute
+  '/admin/login': typeof AdminLoginRoute
+  '/admin/medias': typeof AdminMediasRoute
+  '/admin/messages': typeof AdminMessagesRoute
+  '/admin/parametres': typeof AdminParametresRoute
+  '/admin/services': typeof AdminServicesRoute
+  '/admin/temoignages': typeof AdminTemoignagesRoute
+  '/admin/utilisateurs': typeof AdminUtilisateursRoute
+  '/admin/vodouns': typeof AdminVodounsRoute
+  '/admin/': typeof AdminIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -86,10 +184,24 @@ export interface FileRoutesByTo {
   '/medias': typeof MediasRoute
   '/services': typeof ServicesRoute
   '/temoignages': typeof TemoignagesRoute
+  '/admin/contenu': typeof AdminContenuRoute
+  '/admin/diplomes': typeof AdminDiplomesRoute
+  '/admin/evenements': typeof AdminEvenementsRoute
+  '/admin/formations': typeof AdminFormationsRoute
+  '/admin/login': typeof AdminLoginRoute
+  '/admin/medias': typeof AdminMediasRoute
+  '/admin/messages': typeof AdminMessagesRoute
+  '/admin/parametres': typeof AdminParametresRoute
+  '/admin/services': typeof AdminServicesRoute
+  '/admin/temoignages': typeof AdminTemoignagesRoute
+  '/admin/utilisateurs': typeof AdminUtilisateursRoute
+  '/admin/vodouns': typeof AdminVodounsRoute
+  '/admin': typeof AdminIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/admin': typeof AdminRouteWithChildren
   '/biographie': typeof BiographieRoute
   '/contact': typeof ContactRoute
   '/diplomes': typeof DiplomesRoute
@@ -98,11 +210,25 @@ export interface FileRoutesById {
   '/medias': typeof MediasRoute
   '/services': typeof ServicesRoute
   '/temoignages': typeof TemoignagesRoute
+  '/admin/contenu': typeof AdminContenuRoute
+  '/admin/diplomes': typeof AdminDiplomesRoute
+  '/admin/evenements': typeof AdminEvenementsRoute
+  '/admin/formations': typeof AdminFormationsRoute
+  '/admin/login': typeof AdminLoginRoute
+  '/admin/medias': typeof AdminMediasRoute
+  '/admin/messages': typeof AdminMessagesRoute
+  '/admin/parametres': typeof AdminParametresRoute
+  '/admin/services': typeof AdminServicesRoute
+  '/admin/temoignages': typeof AdminTemoignagesRoute
+  '/admin/utilisateurs': typeof AdminUtilisateursRoute
+  '/admin/vodouns': typeof AdminVodounsRoute
+  '/admin/': typeof AdminIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/admin'
     | '/biographie'
     | '/contact'
     | '/diplomes'
@@ -111,6 +237,19 @@ export interface FileRouteTypes {
     | '/medias'
     | '/services'
     | '/temoignages'
+    | '/admin/contenu'
+    | '/admin/diplomes'
+    | '/admin/evenements'
+    | '/admin/formations'
+    | '/admin/login'
+    | '/admin/medias'
+    | '/admin/messages'
+    | '/admin/parametres'
+    | '/admin/services'
+    | '/admin/temoignages'
+    | '/admin/utilisateurs'
+    | '/admin/vodouns'
+    | '/admin/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -122,9 +261,23 @@ export interface FileRouteTypes {
     | '/medias'
     | '/services'
     | '/temoignages'
+    | '/admin/contenu'
+    | '/admin/diplomes'
+    | '/admin/evenements'
+    | '/admin/formations'
+    | '/admin/login'
+    | '/admin/medias'
+    | '/admin/messages'
+    | '/admin/parametres'
+    | '/admin/services'
+    | '/admin/temoignages'
+    | '/admin/utilisateurs'
+    | '/admin/vodouns'
+    | '/admin'
   id:
     | '__root__'
     | '/'
+    | '/admin'
     | '/biographie'
     | '/contact'
     | '/diplomes'
@@ -133,10 +286,24 @@ export interface FileRouteTypes {
     | '/medias'
     | '/services'
     | '/temoignages'
+    | '/admin/contenu'
+    | '/admin/diplomes'
+    | '/admin/evenements'
+    | '/admin/formations'
+    | '/admin/login'
+    | '/admin/medias'
+    | '/admin/messages'
+    | '/admin/parametres'
+    | '/admin/services'
+    | '/admin/temoignages'
+    | '/admin/utilisateurs'
+    | '/admin/vodouns'
+    | '/admin/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AdminRoute: typeof AdminRouteWithChildren
   BiographieRoute: typeof BiographieRoute
   ContactRoute: typeof ContactRoute
   DiplomesRoute: typeof DiplomesRoute
@@ -205,6 +372,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BiographieRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -212,11 +386,137 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/': {
+      id: '/admin/'
+      path: '/'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AdminIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/vodouns': {
+      id: '/admin/vodouns'
+      path: '/vodouns'
+      fullPath: '/admin/vodouns'
+      preLoaderRoute: typeof AdminVodounsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/utilisateurs': {
+      id: '/admin/utilisateurs'
+      path: '/utilisateurs'
+      fullPath: '/admin/utilisateurs'
+      preLoaderRoute: typeof AdminUtilisateursRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/temoignages': {
+      id: '/admin/temoignages'
+      path: '/temoignages'
+      fullPath: '/admin/temoignages'
+      preLoaderRoute: typeof AdminTemoignagesRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/services': {
+      id: '/admin/services'
+      path: '/services'
+      fullPath: '/admin/services'
+      preLoaderRoute: typeof AdminServicesRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/parametres': {
+      id: '/admin/parametres'
+      path: '/parametres'
+      fullPath: '/admin/parametres'
+      preLoaderRoute: typeof AdminParametresRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/messages': {
+      id: '/admin/messages'
+      path: '/messages'
+      fullPath: '/admin/messages'
+      preLoaderRoute: typeof AdminMessagesRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/medias': {
+      id: '/admin/medias'
+      path: '/medias'
+      fullPath: '/admin/medias'
+      preLoaderRoute: typeof AdminMediasRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/login': {
+      id: '/admin/login'
+      path: '/login'
+      fullPath: '/admin/login'
+      preLoaderRoute: typeof AdminLoginRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/formations': {
+      id: '/admin/formations'
+      path: '/formations'
+      fullPath: '/admin/formations'
+      preLoaderRoute: typeof AdminFormationsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/evenements': {
+      id: '/admin/evenements'
+      path: '/evenements'
+      fullPath: '/admin/evenements'
+      preLoaderRoute: typeof AdminEvenementsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/diplomes': {
+      id: '/admin/diplomes'
+      path: '/diplomes'
+      fullPath: '/admin/diplomes'
+      preLoaderRoute: typeof AdminDiplomesRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/contenu': {
+      id: '/admin/contenu'
+      path: '/contenu'
+      fullPath: '/admin/contenu'
+      preLoaderRoute: typeof AdminContenuRouteImport
+      parentRoute: typeof AdminRoute
+    }
   }
 }
 
+interface AdminRouteChildren {
+  AdminContenuRoute: typeof AdminContenuRoute
+  AdminDiplomesRoute: typeof AdminDiplomesRoute
+  AdminEvenementsRoute: typeof AdminEvenementsRoute
+  AdminFormationsRoute: typeof AdminFormationsRoute
+  AdminLoginRoute: typeof AdminLoginRoute
+  AdminMediasRoute: typeof AdminMediasRoute
+  AdminMessagesRoute: typeof AdminMessagesRoute
+  AdminParametresRoute: typeof AdminParametresRoute
+  AdminServicesRoute: typeof AdminServicesRoute
+  AdminTemoignagesRoute: typeof AdminTemoignagesRoute
+  AdminUtilisateursRoute: typeof AdminUtilisateursRoute
+  AdminVodounsRoute: typeof AdminVodounsRoute
+  AdminIndexRoute: typeof AdminIndexRoute
+}
+
+const AdminRouteChildren: AdminRouteChildren = {
+  AdminContenuRoute: AdminContenuRoute,
+  AdminDiplomesRoute: AdminDiplomesRoute,
+  AdminEvenementsRoute: AdminEvenementsRoute,
+  AdminFormationsRoute: AdminFormationsRoute,
+  AdminLoginRoute: AdminLoginRoute,
+  AdminMediasRoute: AdminMediasRoute,
+  AdminMessagesRoute: AdminMessagesRoute,
+  AdminParametresRoute: AdminParametresRoute,
+  AdminServicesRoute: AdminServicesRoute,
+  AdminTemoignagesRoute: AdminTemoignagesRoute,
+  AdminUtilisateursRoute: AdminUtilisateursRoute,
+  AdminVodounsRoute: AdminVodounsRoute,
+  AdminIndexRoute: AdminIndexRoute,
+}
+
+const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AdminRoute: AdminRouteWithChildren,
   BiographieRoute: BiographieRoute,
   ContactRoute: ContactRoute,
   DiplomesRoute: DiplomesRoute,
