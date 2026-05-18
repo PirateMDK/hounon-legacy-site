@@ -21,7 +21,7 @@ export function SiteContentEditor({ contentKey, title, fields }: {
   useEffect(() => { if (data) setForm(data); }, [data]);
 
   const save = async () => {
-    const { error } = await supabase.from("site_content").upsert({ key: contentKey, value: form });
+    const { error } = await supabase.from("site_content").upsert({ key: contentKey, value: form as never });
     if (error) { toast.error(error.message); return; }
     toast.success("Enregistré");
     qc.invalidateQueries({ queryKey: ["site_content", contentKey] });
