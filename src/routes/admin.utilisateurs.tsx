@@ -21,7 +21,7 @@ function UsersAdmin() {
     },
   });
 
-  const setRole = async (userId: string, role: "super_admin" | "editor" | "user", checked: boolean) => {
+  const setRole = async (userId: string, role: "super_admin" | "editor" | "graduate", checked: boolean) => {
     if (checked) {
       const { error } = await supabase.from("user_roles").insert({ user_id: userId, role });
       if (error) toast.error(error.message); else toast.success("Rôle ajouté");
@@ -41,7 +41,7 @@ function UsersAdmin() {
           <div key={u.id} className="sacred-card">
             <p className="text-ivory">{u.full_name || "Sans nom"} <span className="text-sand text-sm">— {u.email}</span></p>
             <div className="flex gap-4 mt-3 text-sm">
-              {(["super_admin", "editor", "user"] as const).map((r) => (
+              {(["super_admin", "editor", "graduate"] as const).map((r) => (
                 <label key={r} className="inline-flex items-center gap-2 text-sand">
                   <input type="checkbox" checked={u.roles.includes(r)} onChange={(e) => setRole(u.id, r, e.target.checked)} />
                   {r}
