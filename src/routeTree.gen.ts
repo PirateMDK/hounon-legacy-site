@@ -21,6 +21,7 @@ import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
 import { Route as AdminVodounsRouteImport } from './routes/admin.vodouns'
+import { Route as AdminUtilisateursRouteImport } from './routes/admin.utilisateurs'
 import { Route as AdminTemoignagesRouteImport } from './routes/admin.temoignages'
 import { Route as AdminServicesRouteImport } from './routes/admin.services'
 import { Route as AdminMessagesRouteImport } from './routes/admin.messages'
@@ -91,6 +92,11 @@ const AdminVodounsRoute = AdminVodounsRouteImport.update({
   path: '/vodouns',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminUtilisateursRoute = AdminUtilisateursRouteImport.update({
+  id: '/utilisateurs',
+  path: '/utilisateurs',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminTemoignagesRoute = AdminTemoignagesRouteImport.update({
   id: '/temoignages',
   path: '/temoignages',
@@ -157,6 +163,7 @@ export interface FileRoutesByFullPath {
   '/admin/messages': typeof AdminMessagesRoute
   '/admin/services': typeof AdminServicesRoute
   '/admin/temoignages': typeof AdminTemoignagesRoute
+  '/admin/utilisateurs': typeof AdminUtilisateursRoute
   '/admin/vodouns': typeof AdminVodounsRoute
   '/admin/': typeof AdminIndexRoute
 }
@@ -179,6 +186,7 @@ export interface FileRoutesByTo {
   '/admin/messages': typeof AdminMessagesRoute
   '/admin/services': typeof AdminServicesRoute
   '/admin/temoignages': typeof AdminTemoignagesRoute
+  '/admin/utilisateurs': typeof AdminUtilisateursRoute
   '/admin/vodouns': typeof AdminVodounsRoute
   '/admin': typeof AdminIndexRoute
 }
@@ -203,6 +211,7 @@ export interface FileRoutesById {
   '/admin/messages': typeof AdminMessagesRoute
   '/admin/services': typeof AdminServicesRoute
   '/admin/temoignages': typeof AdminTemoignagesRoute
+  '/admin/utilisateurs': typeof AdminUtilisateursRoute
   '/admin/vodouns': typeof AdminVodounsRoute
   '/admin/': typeof AdminIndexRoute
 }
@@ -228,6 +237,7 @@ export interface FileRouteTypes {
     | '/admin/messages'
     | '/admin/services'
     | '/admin/temoignages'
+    | '/admin/utilisateurs'
     | '/admin/vodouns'
     | '/admin/'
   fileRoutesByTo: FileRoutesByTo
@@ -250,6 +260,7 @@ export interface FileRouteTypes {
     | '/admin/messages'
     | '/admin/services'
     | '/admin/temoignages'
+    | '/admin/utilisateurs'
     | '/admin/vodouns'
     | '/admin'
   id:
@@ -273,6 +284,7 @@ export interface FileRouteTypes {
     | '/admin/messages'
     | '/admin/services'
     | '/admin/temoignages'
+    | '/admin/utilisateurs'
     | '/admin/vodouns'
     | '/admin/'
   fileRoutesById: FileRoutesById
@@ -376,6 +388,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminVodounsRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/utilisateurs': {
+      id: '/admin/utilisateurs'
+      path: '/utilisateurs'
+      fullPath: '/admin/utilisateurs'
+      preLoaderRoute: typeof AdminUtilisateursRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/temoignages': {
       id: '/admin/temoignages'
       path: '/temoignages'
@@ -452,6 +471,7 @@ interface AdminRouteChildren {
   AdminMessagesRoute: typeof AdminMessagesRoute
   AdminServicesRoute: typeof AdminServicesRoute
   AdminTemoignagesRoute: typeof AdminTemoignagesRoute
+  AdminUtilisateursRoute: typeof AdminUtilisateursRoute
   AdminVodounsRoute: typeof AdminVodounsRoute
   AdminIndexRoute: typeof AdminIndexRoute
 }
@@ -466,6 +486,7 @@ const AdminRouteChildren: AdminRouteChildren = {
   AdminMessagesRoute: AdminMessagesRoute,
   AdminServicesRoute: AdminServicesRoute,
   AdminTemoignagesRoute: AdminTemoignagesRoute,
+  AdminUtilisateursRoute: AdminUtilisateursRoute,
   AdminVodounsRoute: AdminVodounsRoute,
   AdminIndexRoute: AdminIndexRoute,
 }
