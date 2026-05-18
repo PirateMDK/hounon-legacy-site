@@ -212,6 +212,49 @@
     margin: 1rem auto 0;
   }
 
+  .credibility-logo {
+    height: 50px;
+    width: auto;
+    filter: grayscale(100%) sepia(40%) hue-rotate(5deg) brightness(0.95);
+    opacity: 0.7;
+    transition: all 0.4s ease;
+  }
+  .credibility-logo:hover {
+    filter: none;
+    opacity: 1;
+    transform: translateY(-2px);
+  }
+
+  .tribute-card {
+    position: relative;
+    background:
+      radial-gradient(ellipse at center, oklch(0.18 0.04 60 / 0.9), oklch(0.11 0.012 60));
+    border: 1px solid oklch(0.78 0.13 80 / 0.4);
+    padding: 3rem 2rem;
+    border-radius: 6px;
+    box-shadow: 0 0 80px oklch(0.78 0.13 80 / 0.15) inset, 0 0 40px oklch(0.62 0.13 55 / 0.15);
+  }
+  .tribute-card::before, .tribute-card::after {
+    content: "";
+    display: block;
+    height: 1px;
+    width: 70%;
+    margin: 0 auto;
+    background: linear-gradient(to right, transparent, oklch(0.78 0.13 80 / 0.6), transparent);
+  }
+  .tribute-card::before { margin-bottom: 2rem; }
+  .tribute-card::after { margin-top: 2rem; }
+
+  .father-frame {
+    position: relative;
+    width: 18rem;
+    height: 18rem;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 2px solid oklch(0.78 0.13 80 / 0.6);
+    box-shadow: 0 0 60px oklch(0.78 0.13 80 / 0.4), 0 0 100px oklch(0.62 0.13 55 / 0.25);
+  }
+
   .hero-glow {
     background: var(--gradient-hero);
     position: relative;
