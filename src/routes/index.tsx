@@ -42,7 +42,7 @@ function HomePage() {
         <div className="float-orb" style={{ width: 400, height: 400, background: "oklch(0.78 0.13 80)", bottom: "5%", right: "8%", animationDelay: "3s" }} />
         <div className="relative z-10 mx-auto max-w-6xl grid md:grid-cols-2 gap-12 items-center py-20">
           <div className="fade-up text-center md:text-left">
-            <p className="font-italic-serif text-gold tracking-widest text-sm mb-4">— Bénin & Monde Entier —</p>
+            <p className="font-italic-serif text-gold tracking-widest text-sm mb-4 inline-flex items-center gap-2 justify-center md:justify-start">— Bénin <img src={flagBenin} alt="Bénin" className="h-3 w-auto rounded-[1px] inline" style={{ width: 20 }} /> & Monde Entier —</p>
             <h1 className="font-display text-5xl md:text-6xl lg:text-7xl gold-text mb-3 leading-tight">HOUNON PROPRE</h1>
             <p className="font-italic-serif text-2xl text-sand mb-6">KINWAHO HOUNGUEVI DJIMA</p>
             <p className="font-italic-serif text-xl text-ivory mb-3 leading-snug">
