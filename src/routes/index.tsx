@@ -2,8 +2,9 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import Page from "@/components/Page";
-import heroPortrait from "@/assets/hero-portrait.jpg";
+import djimaPortrait from "@/assets/djima-portrait.png";
 import altarImg from "@/assets/altar.jpg";
+import flagBenin from "@/assets/flag-benin.png";
 import { WA_NUMBER } from "@/components/SiteLayout";
 
 export const Route = createFileRoute("/")({
