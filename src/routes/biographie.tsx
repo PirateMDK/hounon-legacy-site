@@ -70,6 +70,19 @@ function BiographyPage() {
           {(bio ?? "").split("\n\n").map((p, i) => <p key={i} className="mb-4">{p}</p>)}
         </div>
 
+        {/* === PHILOSOPHY === */}
+        <div className="gold-divider" />
+        <div className="text-center max-w-2xl mx-auto">
+          <h2 className="font-display text-3xl text-gold mb-6">Sa Philosophie</h2>
+          <div className="inline-block p-2 border-2 border-gold/60 rounded-sm bg-black" style={{ boxShadow: "var(--shadow-gold)" }}>
+            <img src="/src/assets/philosophy.webp" alt="Philosophie spirituelle de Honnongan Propre" className="w-full max-w-[400px] mx-auto" loading="lazy" />
+          </div>
+          <p className="font-italic-serif text-xl text-ivory mt-6 leading-relaxed">
+            « Avec une forte concentration, on arrive à être en communication avec les éléments de la nature. »
+          </p>
+          <p className="font-display text-gold mt-3 tracking-wider">— Honnongan Propre</p>
+        </div>
+
         {/* === TRIBUTE TO FATHER === */}
         {tributeVisible && (
           <>
