@@ -456,30 +456,36 @@ export type Database = {
       }
       vodouns: {
         Row: {
+          accent_color: string | null
           created_at: string
           description: string
           id: string
           name: string
+          photo_url: string | null
           sort_order: number
           subtitle: string | null
           symbol: string | null
           visible: boolean
         }
         Insert: {
+          accent_color?: string | null
           created_at?: string
           description: string
           id?: string
           name: string
+          photo_url?: string | null
           sort_order?: number
           subtitle?: string | null
           symbol?: string | null
           visible?: boolean
         }
         Update: {
+          accent_color?: string | null
           created_at?: string
           description?: string
           id?: string
           name?: string
+          photo_url?: string | null
           sort_order?: number
           subtitle?: string | null
           symbol?: string | null
