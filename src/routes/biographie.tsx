@@ -7,7 +7,8 @@ import aditiFather from "@/assets/aditi-father.png";
 import flagBenin from "@/assets/flag-benin.png";
 import logoCncvb from "@/assets/logo-cncvb.png";
 import logoMinistere from "@/assets/logo-ministere.png";
-import { MapPin } from "lucide-react";
+import philosophyImg from "@/assets/philosophy.webp";
+import { MapPin, Plus } from "lucide-react";
 
 export const Route = createFileRoute("/biographie")({
   head: () => ({ meta: [{ title: "Biographie — Hounon Propre" }, { name: "description", content: "Parcours et lignée du maître spirituel KINWAHO HOUNGUEVI DJIMA." }] }),
