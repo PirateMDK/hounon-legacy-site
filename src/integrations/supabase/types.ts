@@ -277,6 +277,39 @@ export type Database = {
         }
         Relationships: []
       }
+      navigation_items: {
+        Row: {
+          created_at: string
+          id: string
+          is_core: boolean
+          is_visible: boolean
+          label: string
+          open_new_tab: boolean
+          order_position: number
+          url: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          is_core?: boolean
+          is_visible?: boolean
+          label: string
+          open_new_tab?: boolean
+          order_position?: number
+          url: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          is_core?: boolean
+          is_visible?: boolean
+          label?: string
+          open_new_tab?: boolean
+          order_position?: number
+          url?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           created_at: string
