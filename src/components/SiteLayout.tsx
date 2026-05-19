@@ -1,29 +1,55 @@
 import { Link, useLocation, Outlet } from "@tanstack/react-router";
-import { useState } from "react";
-import { Menu, X, MessageCircle, Mail, MapPin } from "lucide-react";
+import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
+import { Menu, X, MessageCircle, Mail, MapPin, Globe } from "lucide-react";
 import logoCncvb from "@/assets/logo-cncvb.png";
 import logoMinistere from "@/assets/logo-ministere.png";
 import flagBenin from "@/assets/flag-benin.png";
 
-const NAV = [
-  { to: "/", label: "Accueil" },
-  { to: "/biographie", label: "Biographie" },
-  { to: "/services", label: "Services" },
-  { to: "/formations", label: "Formations" },
-  { to: "/diplomes", label: "Diplômés" },
-  { to: "/medias", label: "Médias" },
-  { to: "/evenements", label: "Événements" },
-  { to: "/temoignages", label: "Témoignages" },
-  { to: "/contact", label: "Contact" },
-];
-
 const WA_NUMBER = "22997375652";
 const WA_DISPLAY = "+229 97 37 56 52";
 const EMAIL = "hounonpropre@gmail.com";
+const WEBSITE = "www.hpropre.com";
+
+const FALLBACK_NAV = [
+  { label: "Accueil", url: "/", open_new_tab: false },
+  { label: "Biographie", url: "/biographie", open_new_tab: false },
+  { label: "Services", url: "/services", open_new_tab: false },
+  { label: "Formations", url: "/formations", open_new_tab: false },
+  { label: "Diplômés", url: "/diplomes", open_new_tab: false },
+  { label: "Médias", url: "/medias", open_new_tab: false },
+  { label: "Événements", url: "/evenements", open_new_tab: false },
+  { label: "Témoignages", url: "/temoignages", open_new_tab: false },
+  { label: "Contact", url: "/contact", open_new_tab: false },
+];
+
+function useNavItems() {
+  return useQuery({
+    queryKey: ["public-nav"],
+    queryFn: async () => {
+      const { data } = await supabase.from("navigation_items")
+        .select("label,url,open_new_tab,is_visible,order_position")
+        .eq("is_visible", true)
+        .order("order_position");
+      return (data && data.length > 0) ? data : FALLBACK_NAV;
+    },
+  });
+}
+
+function NavLink({ url, label, openNewTab, active, onClick }: { url: string; label: string; openNewTab: boolean; active: boolean; onClick?: () => void }) {
+  const cls = `nav-link ${active ? "active" : ""}`;
+  if (openNewTab || url.startsWith("http")) {
+    return <a href={url} target="_blank" rel="noopener noreferrer" className={cls} onClick={onClick}>{label}</a>;
+  }
+  return <Link to={url} className={cls} onClick={onClick}>{label}</Link>;
+}
 
 export function Header() {
   const { pathname } = useLocation();
   const [open, setOpen] = useState(false);
+  const { data: nav } = useNavItems();
+  const items = nav ?? FALLBACK_NAV;
   return (
     <header className="nav-blur fixed top-0 left-0 right-0 z-40">
       <div className="mx-auto max-w-7xl px-6 py-4 flex items-center justify-between">
@@ -32,10 +58,8 @@ export function Header() {
           <span className="font-italic-serif text-xs text-sand">KINWAHO HOUNGUEVI DJIMA</span>
         </Link>
         <nav className="hidden lg:flex items-center gap-1">
-          {NAV.map((n) => (
-            <Link key={n.to} to={n.to} className={`nav-link ${pathname === n.to ? "active" : ""}`}>
-              {n.label}
-            </Link>
+          {items.map((n) => (
+            <NavLink key={n.url + n.label} url={n.url} label={n.label} openNewTab={Boolean(n.open_new_tab)} active={pathname === n.url} />
           ))}
         </nav>
         <button className="lg:hidden text-gold" onClick={() => setOpen((o) => !o)} aria-label="Menu">
@@ -44,10 +68,8 @@ export function Header() {
       </div>
       {open && (
         <nav className="lg:hidden border-t border-border bg-background/95 px-6 py-4 flex flex-col gap-2">
-          {NAV.map((n) => (
-            <Link key={n.to} to={n.to} className={`nav-link ${pathname === n.to ? "active" : ""}`} onClick={() => setOpen(false)}>
-              {n.label}
-            </Link>
+          {items.map((n) => (
+            <NavLink key={n.url + n.label} url={n.url} label={n.label} openNewTab={Boolean(n.open_new_tab)} active={pathname === n.url} onClick={() => setOpen(false)} />
           ))}
         </nav>
       )}
@@ -56,6 +78,8 @@ export function Header() {
 }
 
 export function Footer() {
+  const { data: nav } = useNavItems();
+  const items = nav ?? FALLBACK_NAV;
   return (
     <footer className="border-t border-border mt-24 pt-16 pb-8 bg-card/40">
       <div className="mx-auto max-w-7xl px-6 grid md:grid-cols-3 gap-10">
@@ -72,8 +96,12 @@ export function Footer() {
         <div>
           <h4 className="text-gold mb-3">Navigation</h4>
           <ul className="grid grid-cols-2 gap-y-1 text-sm">
-            {NAV.map((n) => (
-              <li key={n.to}><Link to={n.to} className="text-sand hover:text-gold">{n.label}</Link></li>
+            {items.map((n) => (
+              <li key={n.url + n.label}>
+                {n.open_new_tab || n.url.startsWith("http")
+                  ? <a href={n.url} target="_blank" rel="noopener noreferrer" className="text-sand hover:text-gold">{n.label}</a>
+                  : <Link to={n.url} className="text-sand hover:text-gold">{n.label}</Link>}
+              </li>
             ))}
           </ul>
         </div>
@@ -82,6 +110,10 @@ export function Footer() {
           <ul className="space-y-2 text-sm text-sand">
             <li className="flex items-start gap-2"><MessageCircle size={16} className="mt-1 text-gold" /> {WA_DISPLAY}</li>
             <li className="flex items-start gap-2"><Mail size={16} className="mt-1 text-gold" /> {EMAIL}</li>
+            <li className="flex items-start gap-2">
+              <Globe size={16} className="mt-1 text-gold" />
+              <a href={`https://${WEBSITE}`} target="_blank" rel="noopener noreferrer" className="hover:text-gold">{WEBSITE}</a>
+            </li>
             <li className="flex items-start gap-2">
               <MapPin size={16} className="mt-1 text-gold" />
               <span className="inline-flex items-center gap-2">
@@ -129,6 +161,8 @@ export function WhatsAppFloat() {
 }
 
 export default function SiteLayout() {
+  // Scroll restoration suppression for anchor refresh
+  useEffect(() => {}, []);
   return (
     <div className="min-h-screen flex flex-col pt-20">
       <Header />
@@ -141,4 +175,4 @@ export default function SiteLayout() {
   );
 }
 
-export { WA_NUMBER, WA_DISPLAY, EMAIL };
+export { WA_NUMBER, WA_DISPLAY, EMAIL, WEBSITE };

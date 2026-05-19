@@ -7,7 +7,8 @@ import aditiFather from "@/assets/aditi-father.png";
 import flagBenin from "@/assets/flag-benin.png";
 import logoCncvb from "@/assets/logo-cncvb.png";
 import logoMinistere from "@/assets/logo-ministere.png";
-import { MapPin } from "lucide-react";
+import philosophyImg from "@/assets/philosophy.webp";
+import { MapPin, Plus } from "lucide-react";
 
 export const Route = createFileRoute("/biographie")({
   head: () => ({ meta: [{ title: "Biographie — Hounon Propre" }, { name: "description", content: "Parcours et lignée du maître spirituel KINWAHO HOUNGUEVI DJIMA." }] }),
@@ -68,6 +69,19 @@ function BiographyPage() {
 
         <div className="prose prose-invert max-w-3xl mx-auto font-body text-ivory text-lg leading-relaxed text-justify">
           {(bio ?? "").split("\n\n").map((p, i) => <p key={i} className="mb-4">{p}</p>)}
+        </div>
+
+        {/* === PHILOSOPHY === */}
+        <div className="gold-divider" />
+        <div className="text-center max-w-2xl mx-auto">
+          <h2 className="font-display text-3xl text-gold mb-6">Sa Philosophie</h2>
+          <div className="inline-block p-2 border-2 border-gold/60 rounded-sm bg-black" style={{ boxShadow: "var(--shadow-gold)" }}>
+            <img src={philosophyImg} alt="Philosophie spirituelle de Honnongan Propre" className="w-full max-w-[400px] mx-auto" loading="lazy" />
+          </div>
+          <p className="font-italic-serif text-xl text-ivory mt-6 leading-relaxed">
+            « Avec une forte concentration, on arrive à être en communication avec les éléments de la nature. »
+          </p>
+          <p className="font-display text-gold mt-3 tracking-wider">— Honnongan Propre</p>
         </div>
 
         {/* === TRIBUTE TO FATHER === */}

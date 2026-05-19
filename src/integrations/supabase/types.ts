@@ -277,6 +277,39 @@ export type Database = {
         }
         Relationships: []
       }
+      navigation_items: {
+        Row: {
+          created_at: string
+          id: string
+          is_core: boolean
+          is_visible: boolean
+          label: string
+          open_new_tab: boolean
+          order_position: number
+          url: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          is_core?: boolean
+          is_visible?: boolean
+          label: string
+          open_new_tab?: boolean
+          order_position?: number
+          url: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          is_core?: boolean
+          is_visible?: boolean
+          label?: string
+          open_new_tab?: boolean
+          order_position?: number
+          url?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           created_at: string
@@ -423,30 +456,36 @@ export type Database = {
       }
       vodouns: {
         Row: {
+          accent_color: string | null
           created_at: string
           description: string
           id: string
           name: string
+          photo_url: string | null
           sort_order: number
           subtitle: string | null
           symbol: string | null
           visible: boolean
         }
         Insert: {
+          accent_color?: string | null
           created_at?: string
           description: string
           id?: string
           name: string
+          photo_url?: string | null
           sort_order?: number
           subtitle?: string | null
           symbol?: string | null
           visible?: boolean
         }
         Update: {
+          accent_color?: string | null
           created_at?: string
           description?: string
           id?: string
           name?: string
+          photo_url?: string | null
           sort_order?: number
           subtitle?: string | null
           symbol?: string | null
@@ -469,7 +508,7 @@ export type Database = {
       is_staff: { Args: { _user_id: string }; Returns: boolean }
     }
     Enums: {
-      app_role: "super_admin" | "editor" | "graduate"
+      app_role: "super_admin" | "editor" | "graduate" | "admin" | "sub_admin"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -597,7 +636,7 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
-      app_role: ["super_admin", "editor", "graduate"],
+      app_role: ["super_admin", "editor", "graduate", "admin", "sub_admin"],
     },
   },
 } as const
