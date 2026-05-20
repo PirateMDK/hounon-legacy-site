@@ -26,6 +26,8 @@ function ServicesPage() {
           🌍 Disponible dans le monde entier — Livraison & Envoi à Distance
         </p>
 
+        <PromoBanner />
+
         <div className="grid md:grid-cols-2 gap-6 mt-16">
           {(services ?? []).map((s) => (
             <div key={s.id} className="sacred-card">
