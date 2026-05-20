@@ -6,7 +6,7 @@ export const Route = createFileRoute("/admin/contenu")({
   component: ContentAdmin,
 });
 
-const TABS = ["Biographie", "Hommage au Père", "Informations Contact"] as const;
+const TABS = ["Biographie", "Hommage au Père", "Bannière Promo", "Informations Contact"] as const;
 
 function ContentAdmin() {
   const [tab, setTab] = useState<typeof TABS[number]>("Biographie");
@@ -39,6 +39,18 @@ function ContentAdmin() {
             { key: "photo_url", label: "URL photo du père (laisser vide pour utiliser la photo par défaut)", type: "url" },
             { key: "text", label: "Texte de l'hommage", type: "textarea" },
             { key: "closing", label: "Phrase de clôture" },
+          ]} />
+      )}
+
+      {tab === "Bannière Promo" && (
+        <SiteContentEditor contentKey="promo_banner" title="Bannière promotionnelle (Accueil + Services)"
+          fields={[
+            { key: "visible", label: "Bannière visible", type: "boolean" },
+            { key: "title", label: "Titre" },
+            { key: "subtitle", label: "Sous-titre / description" },
+            { key: "cta_label", label: "Texte du bouton" },
+            { key: "cta_link", label: "Lien du bouton (ex: /contact)" },
+            { key: "image_url", label: "URL image de fond (laisser vide pour défaut)", type: "url" },
           ]} />
       )}
 

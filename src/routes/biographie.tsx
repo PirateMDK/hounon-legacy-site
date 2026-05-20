@@ -146,13 +146,24 @@ function BiographyPage() {
           <p className="font-italic-serif text-sand text-center max-w-3xl mx-auto mt-6">
             Hounon Propre est consacré à plusieurs divinités vodoun. Voici celles dont la présence guide son travail.
           </p>
-          <div className="grid md:grid-cols-2 gap-6 mt-12">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mt-12">
             {(vodouns ?? []).map((v) => (
-              <div key={v.id} className="sacred-card">
-                <div className="text-5xl mb-4">{v.symbol}</div>
-                <h3 className="font-display text-2xl text-gold">{v.name}</h3>
-                {v.subtitle && <p className="font-italic-serif text-sand">{v.subtitle}</p>}
-                <p className="text-ivory/90 mt-4">{v.description}</p>
+              <div key={v.id} className="sacred-card overflow-hidden p-0 flex flex-col" style={v.accent_color ? { borderColor: v.accent_color } : undefined}>
+                {v.photo_url ? (
+                  <div className="aspect-[4/3] overflow-hidden bg-black">
+                    <img src={v.photo_url} alt={v.name} className="w-full h-full object-cover hover:scale-105 transition duration-700" loading="lazy" />
+                  </div>
+                ) : (
+                  <div className="aspect-[4/3] flex items-center justify-center bg-black/60 text-6xl">{v.symbol}</div>
+                )}
+                <div className="p-6 flex-1">
+                  <div className="flex items-center gap-3 mb-2">
+                    <span className="text-3xl">{v.symbol}</span>
+                    <h3 className="font-display text-xl text-gold leading-tight">{v.name}</h3>
+                  </div>
+                  {v.subtitle && <p className="font-italic-serif text-sand text-sm mb-3">{v.subtitle}</p>}
+                  <p className="text-ivory/90 text-sm">{v.description}</p>
+                </div>
               </div>
             ))}
           </div>

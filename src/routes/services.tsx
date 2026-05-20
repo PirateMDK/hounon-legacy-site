@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import Page from "@/components/Page";
+import PromoBanner from "@/components/PromoBanner";
 
 export const Route = createFileRoute("/services")({
   head: () => ({ meta: [{ title: "Services — Hounon Propre" }, { name: "description", content: "Consultation du Fâ, rituels d'amour, protection, guérison, prospérité. Disponible dans le monde entier." }] }),
@@ -24,6 +25,8 @@ function ServicesPage() {
         <p className="text-center font-italic-serif text-xl text-gold mt-8">
           🌍 Disponible dans le monde entier — Livraison & Envoi à Distance
         </p>
+
+        <PromoBanner />
 
         <div className="grid md:grid-cols-2 gap-6 mt-16">
           {(services ?? []).map((s) => (
