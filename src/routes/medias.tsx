@@ -130,36 +130,38 @@ function MediasPage() {
               <p className="text-sand text-sm">{allPhotos.length} photo{allPhotos.length > 1 ? "s" : ""} — page {page}/{totalPages}</p>
             </div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {visible.map((p, i) => {
-            const idx = (page - 1) * PAGE_SIZE + i;
-            return (
-              <button
-                key={idx}
-                type="button"
-                onClick={() => setLightbox(idx)}
-                className="aspect-square overflow-hidden rounded-sm border border-border hover:border-gold transition cursor-zoom-in group"
-                aria-label={p.title ?? `Photo ${idx + 1}`}
-              >
-                <img src={p.src} alt={p.title ?? ""} className="w-full h-full object-cover group-hover:scale-105 transition duration-700" loading="lazy" />
-              </button>
-            );
-          })}
-        </div>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {visible.map((p, i) => {
+                const idx = (page - 1) * PAGE_SIZE + i;
+                return (
+                  <button
+                    key={idx}
+                    type="button"
+                    onClick={() => setLightbox(idx)}
+                    className="aspect-square overflow-hidden rounded-sm border border-border hover:border-gold transition cursor-zoom-in group"
+                    aria-label={p.title ?? `Photo ${idx + 1}`}
+                  >
+                    <img src={p.src} alt={p.title ?? ""} className="w-full h-full object-cover group-hover:scale-105 transition duration-700" loading="lazy" />
+                  </button>
+                );
+              })}
+            </div>
 
-        {totalPages > 1 && (
-          <div className="flex items-center justify-center gap-2 mt-10">
-            <button onClick={() => setPage((p) => Math.max(1, p - 1))} disabled={page === 1}
-              className="btn-outline disabled:opacity-40 disabled:cursor-not-allowed"><ChevronLeft size={16} /> Précédent</button>
-            {Array.from({ length: totalPages }, (_, i) => i + 1).map((n) => (
-              <button key={n} onClick={() => setPage(n)}
-                className={`w-10 h-10 rounded-sm border font-display ${n === page ? "bg-gold text-background border-gold" : "border-border text-sand hover:border-gold"}`}>
-                {n}
-              </button>
-            ))}
-            <button onClick={() => setPage((p) => Math.min(totalPages, p + 1))} disabled={page === totalPages}
-              className="btn-outline disabled:opacity-40 disabled:cursor-not-allowed">Suivant <ChevronRight size={16} /></button>
-          </div>
+            {totalPages > 1 && (
+              <div className="flex items-center justify-center gap-2 mt-10">
+                <button onClick={() => setPage((p) => Math.max(1, p - 1))} disabled={page === 1}
+                  className="btn-outline disabled:opacity-40 disabled:cursor-not-allowed"><ChevronLeft size={16} /> Précédent</button>
+                {Array.from({ length: totalPages }, (_, i) => i + 1).map((n) => (
+                  <button key={n} onClick={() => setPage(n)}
+                    className={`w-10 h-10 rounded-sm border font-display ${n === page ? "bg-gold text-background border-gold" : "border-border text-sand hover:border-gold"}`}>
+                    {n}
+                  </button>
+                ))}
+                <button onClick={() => setPage((p) => Math.min(totalPages, p + 1))} disabled={page === totalPages}
+                  className="btn-outline disabled:opacity-40 disabled:cursor-not-allowed">Suivant <ChevronRight size={16} /></button>
+              </div>
+            )}
+          </>
         )}
       </section>
 
