@@ -31,6 +31,13 @@ function MediasPage() {
     : fallback.map((src) => ({ src, title: null, description: null }));
 
   const [page, setPage] = useState(1);
+  const [filter, setFilter] = useState<"all" | "videos" | "photos">("all");
+
+  const handleFilterChange = (f: "all" | "videos" | "photos") => {
+    setFilter(f);
+    setPage(1);
+  };
+
   const totalPages = Math.max(1, Math.ceil(allPhotos.length / PAGE_SIZE));
   const visible = allPhotos.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
 
