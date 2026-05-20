@@ -6,7 +6,7 @@ import ceremonyImg from "@/assets/ceremony.jpg";
 import plantsImg from "@/assets/plants.jpg";
 import altarImg from "@/assets/altar.jpg";
 import { useState, useEffect, useCallback } from "react";
-import { ChevronLeft, ChevronRight, X } from "lucide-react";
+import { ChevronLeft, ChevronRight, X, Film, Image as ImageIcon, Grid3X3 } from "lucide-react";
 
 const PAGE_SIZE = 9;
 
