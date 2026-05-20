@@ -101,11 +101,22 @@ function HomePage() {
         </p>
         <div className="grid md:grid-cols-3 gap-6 mt-12">
           {(vodouns ?? []).map((v) => (
-            <div key={v.id} className="sacred-card">
-              <div className="text-4xl mb-4">{v.symbol}</div>
-              <h3 className="font-display text-xl text-gold mb-1">{v.name}</h3>
-              {v.subtitle && <p className="font-italic-serif text-sand text-sm mb-3">{v.subtitle}</p>}
-              <p className="text-ivory/80 text-sm line-clamp-4">{v.description}</p>
+            <div key={v.id} className="sacred-card overflow-hidden p-0 flex flex-col" style={v.accent_color ? { borderColor: v.accent_color } : undefined}>
+              {v.photo_url ? (
+                <div className="aspect-[4/3] overflow-hidden bg-black">
+                  <img src={v.photo_url} alt={v.name} className="w-full h-full object-cover hover:scale-105 transition duration-700" loading="lazy" />
+                </div>
+              ) : (
+                <div className="aspect-[4/3] flex items-center justify-center bg-black/60 text-6xl">{v.symbol}</div>
+              )}
+              <div className="p-5 flex-1">
+                <div className="flex items-center gap-2 mb-1">
+                  <span className="text-2xl">{v.symbol}</span>
+                  <h3 className="font-display text-lg text-gold leading-tight">{v.name}</h3>
+                </div>
+                {v.subtitle && <p className="font-italic-serif text-sand text-xs mb-2">{v.subtitle}</p>}
+                <p className="text-ivory/80 text-sm line-clamp-3">{v.description}</p>
+              </div>
             </div>
           ))}
         </div>
@@ -114,6 +125,8 @@ function HomePage() {
           <Link to="/biographie" hash="vodouns" className="btn-outline">Voir tous les Vodouns</Link>
         </div>
       </section>
+
+      <PromoBanner />
 
       <div className="mx-auto max-w-6xl px-6"><div className="gold-divider" /></div>
 
