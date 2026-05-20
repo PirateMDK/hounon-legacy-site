@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import Page from "@/components/Page";
+import PromoBanner from "@/components/PromoBanner";
 import djimaPortrait from "@/assets/djima-portrait.png";
 import altarImg from "@/assets/altar.jpg";
 import flagBenin from "@/assets/flag-benin.png";
