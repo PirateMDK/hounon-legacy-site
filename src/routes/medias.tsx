@@ -122,39 +122,13 @@ function MediasPage() {
         )}
 
         {filter === "all" && <div className="gold-divider" />}
-        {videos && videos.length > 0 ? (
-          <div className="grid md:grid-cols-3 gap-6">
-            {videos.map((v) => (
-              <div key={v.id} className="sacred-card">
-                <div className="aspect-video bg-black rounded-sm overflow-hidden mb-3">
-                  <iframe src={v.youtube_url} className="w-full h-full" allowFullScreen title={v.title} />
-                </div>
-                <h3 className="font-display text-gold">{v.title}</h3>
-              </div>
-            ))}
-          </div>
-        ) : (
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {placeholders.map((src, i) => (
-              <div key={i} className="sacred-card p-0 overflow-hidden">
-                <div className="aspect-video relative">
-                  <img src={src} alt="" className="w-full h-full object-cover opacity-60" />
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="w-16 h-16 rounded-full bg-gold/80 flex items-center justify-center text-background text-3xl">▶</div>
-                  </div>
-                </div>
-                <p className="p-3 font-italic-serif text-sand text-center">Vidéo à venir</p>
-              </div>
-            ))}
-          </div>
-        )}
 
-        <div className="gold-divider" />
-
-        <div className="flex items-baseline justify-between mb-6">
-          <h2 className="font-display text-2xl text-gold">Galerie</h2>
-          <p className="text-sand text-sm">{allPhotos.length} photo{allPhotos.length > 1 ? "s" : ""} — page {page}/{totalPages}</p>
-        </div>
+        {filter !== "videos" && (
+          <>
+            <div className="flex items-baseline justify-between mb-6">
+              <h2 className="font-display text-2xl text-gold">Galerie</h2>
+              <p className="text-sand text-sm">{allPhotos.length} photo{allPhotos.length > 1 ? "s" : ""} — page {page}/{totalPages}</p>
+            </div>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {visible.map((p, i) => {
