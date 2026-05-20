@@ -64,7 +64,64 @@ function MediasPage() {
       <section className="px-6 py-20 mx-auto max-w-6xl">
         <h1 className="section-title">Vidéos & Médias</h1>
 
-        <h2 className="font-display text-2xl text-gold mt-16 mb-6">Vidéos & Conférences</h2>
+        <div className="flex flex-wrap items-center justify-center gap-3 mt-10 mb-6">
+          {[
+            { key: "all" as const, label: "Tout", icon: Grid3X3 },
+            { key: "videos" as const, label: "Vidéos", icon: Film },
+            { key: "photos" as const, label: "Photos", icon: ImageIcon },
+          ].map((btn) => {
+            const active = filter === btn.key;
+            return (
+              <button
+                key={btn.key}
+                type="button"
+                onClick={() => handleFilterChange(btn.key)}
+                className={`inline-flex items-center gap-2 px-5 py-2.5 rounded-sm border font-display text-sm tracking-wide transition cursor-pointer ${
+                  active
+                    ? "bg-gold text-background border-gold shadow-[0_0_20px_oklch(0.78_0.13_80/0.25)]"
+                    : "border-border text-sand hover:border-gold hover:text-gold"
+                }`}
+              >
+                <btn.icon size={16} />
+                {btn.label}
+              </button>
+            );
+          })}
+        </div>
+
+        {filter !== "photos" && (
+          <>
+            <h2 className="font-display text-2xl text-gold mt-10 mb-6">Vidéos & Conférences</h2>
+            {videos && videos.length > 0 ? (
+              <div className="grid md:grid-cols-3 gap-6">
+                {videos.map((v) => (
+                  <div key={v.id} className="sacred-card">
+                    <div className="aspect-video bg-black rounded-sm overflow-hidden mb-3">
+                      <iframe src={v.youtube_url} className="w-full h-full" allowFullScreen title={v.title} />
+                    </div>
+                    <h3 className="font-display text-gold">{v.title}</h3>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                {placeholders.map((src, i) => (
+                  <div key={i} className="sacred-card p-0 overflow-hidden">
+                    <div className="aspect-video relative">
+                      <img src={src} alt="" className="w-full h-full object-cover opacity-60" />
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <div className="w-16 h-16 rounded-full bg-gold/80 flex items-center justify-center text-background text-3xl">▶</div>
+                      </div>
+                    </div>
+                    <p className="p-3 font-italic-serif text-sand text-center">Vidéo à venir</p>
+                  </div>
+                ))}
+              </div>
+            )}
+          </>
+        )}
+
+        {filter === "all" && <div className="gold-divider" />}
         {videos && videos.length > 0 ? (
           <div className="grid md:grid-cols-3 gap-6">
             {videos.map((v) => (
