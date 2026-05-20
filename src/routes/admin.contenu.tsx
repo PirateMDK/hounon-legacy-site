@@ -42,6 +42,18 @@ function ContentAdmin() {
           ]} />
       )}
 
+      {tab === "Bannière Promo" && (
+        <SiteContentEditor contentKey="promo_banner" title="Bannière promotionnelle (Accueil + Services)"
+          fields={[
+            { key: "visible", label: "Bannière visible", type: "boolean" },
+            { key: "title", label: "Titre" },
+            { key: "subtitle", label: "Sous-titre / description" },
+            { key: "cta_label", label: "Texte du bouton" },
+            { key: "cta_link", label: "Lien du bouton (ex: /contact)" },
+            { key: "image_url", label: "URL image de fond (laisser vide pour défaut)", type: "url" },
+          ]} />
+      )}
+
       {tab === "Informations Contact" && (
         <SiteContentEditor contentKey="contact_info" title="Coordonnées"
           fields={[
