@@ -6,7 +6,7 @@ export const Route = createFileRoute("/admin/contenu")({
   component: ContentAdmin,
 });
 
-const TABS = ["Biographie", "Hommage au Père", "Informations Contact"] as const;
+const TABS = ["Biographie", "Hommage au Père", "Bannière Promo", "Informations Contact"] as const;
 
 function ContentAdmin() {
   const [tab, setTab] = useState<typeof TABS[number]>("Biographie");
