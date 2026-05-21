@@ -19,16 +19,16 @@ function MediasAdmin() {
         <CrudPanel title="Galerie Photos" table="media_photos" fields={[
           { key: "title", label: "Titre" },
           { key: "description", label: "Description", type: "textarea" },
-          { key: "image_url", label: "URL de l'image" },
+          { key: "image_url", label: "Image", type: "upload", accept: "image/*", bucket: "media" },
           { key: "photo_date", label: "Date", type: "date" },
           { key: "sort_order", label: "Ordre", type: "number" },
         ]} />
       ) : (
-        <CrudPanel title="Vidéos YouTube" table="media_videos" fields={[
+        <CrudPanel title="Vidéos" table="media_videos" fields={[
           { key: "title", label: "Titre" },
           { key: "description", label: "Description", type: "textarea" },
-          { key: "youtube_url", label: "URL YouTube" },
-          { key: "thumbnail_url", label: "Miniature (optionnel)" },
+          { key: "youtube_url", label: "URL YouTube (embed) ou vidéo importée", type: "text" },
+          { key: "thumbnail_url", label: "Miniature (image)", type: "upload", accept: "image/*", bucket: "media" },
           { key: "video_date", label: "Date", type: "date" },
           { key: "sort_order", label: "Ordre", type: "number" },
         ]} />
