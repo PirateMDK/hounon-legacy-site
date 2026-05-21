@@ -157,3 +157,45 @@ export function CrudPanel({
     </div>
   );
 }
+
+function UploadField({ value, onChange, accept, bucket }: { value: string; onChange: (url: string) => void; accept: string; bucket: string }) {
+  const [busy, setBusy] = useState(false);
+  const onFile = async (file: File) => {
+    setBusy(true);
+    try {
+      const ext = file.name.split(".").pop() || "bin";
+      const path = `uploads/${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ext}`;
+      const { error } = await supabase.storage.from(bucket).upload(path, file, { upsert: false, contentType: file.type });
+      if (error) throw error;
+      const { data } = supabase.storage.from(bucket).getPublicUrl(path);
+      onChange(data.publicUrl);
+      toast.success("Fichier importé");
+    } catch (e) {
+      toast.error(e instanceof Error ? e.message : "Échec de l'import");
+    } finally {
+      setBusy(false);
+    }
+  };
+  const isVideo = accept.includes("video");
+  return (
+    <div className="space-y-2">
+      {value && (
+        isVideo ? (
+          <video src={value} className="max-h-40 rounded border border-border" controls />
+        ) : (
+          <img src={value} alt="" className="max-h-40 rounded border border-border" />
+        )
+      )}
+      <div className="flex gap-2 items-center">
+        <label className="inline-flex items-center gap-2 px-3 py-2 bg-input border border-border rounded text-sand text-sm cursor-pointer hover:border-gold">
+          {busy ? <Loader2 size={14} className="animate-spin" /> : <Upload size={14} />}
+          {busy ? "Import…" : "Importer un fichier"}
+          <input type="file" accept={accept} className="hidden" disabled={busy}
+            onChange={(e) => { const f = e.target.files?.[0]; if (f) onFile(f); e.target.value = ""; }} />
+        </label>
+        <input value={value} onChange={(e) => onChange(e.target.value)} placeholder="ou collez une URL"
+          className="flex-1 px-3 py-2 bg-input border border-border rounded text-ivory text-sm" />
+      </div>
+    </div>
+  );
+}
