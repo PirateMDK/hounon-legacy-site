@@ -2,14 +2,16 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { useState } from "react";
 import { toast } from "sonner";
-import { Trash2, Plus, Save, Eye, EyeOff } from "lucide-react";
+import { Trash2, Plus, Save, Eye, EyeOff, Upload, Loader2 } from "lucide-react";
 
 export type FieldDef = {
   key: string;
   label: string;
-  type?: "text" | "textarea" | "number" | "date" | "boolean" | "select";
+  type?: "text" | "textarea" | "number" | "date" | "boolean" | "select" | "upload";
   options?: string[];
   defaultValue?: string | number | boolean;
+  accept?: string;
+  bucket?: string;
 };
 
 type Row = Record<string, unknown> & { id: string };
