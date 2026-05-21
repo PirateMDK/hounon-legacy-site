@@ -27,8 +27,7 @@ function MediasAdmin() {
         <CrudPanel title="Vidéos" table="media_videos" fields={[
           { key: "title", label: "Titre" },
           { key: "description", label: "Description", type: "textarea" },
-          { key: "youtube_url", label: "URL YouTube (embed) — laisser vide si vidéo importée" },
-          { key: "video_file", label: "Importer une vidéo (.mp4)", type: "upload", accept: "video/*", bucket: "media" },
+          { key: "youtube_url", label: "URL YouTube (embed) ou importer un fichier vidéo", type: "upload", accept: "video/mp4,video/webm,video/*", bucket: "media" },
           { key: "thumbnail_url", label: "Miniature (image)", type: "upload", accept: "image/*", bucket: "media" },
           { key: "video_date", label: "Date", type: "date" },
           { key: "sort_order", label: "Ordre", type: "number" },
