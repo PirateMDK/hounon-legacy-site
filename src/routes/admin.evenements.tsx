@@ -9,7 +9,7 @@ export const Route = createFileRoute("/admin/evenements")({
       { key: "event_date", label: "Date", type: "date" },
       { key: "event_time", label: "Horaire" },
       { key: "location", label: "Lieu" },
-      { key: "cover_image_url", label: "Image de couverture (URL)" },
+      { key: "cover_image_url", label: "Image de couverture", type: "upload", accept: "image/*", bucket: "media" },
       { key: "status", label: "Statut", type: "select", options: ["a_venir", "passe", "brouillon"], defaultValue: "a_venir" },
     ]} />
   ),
