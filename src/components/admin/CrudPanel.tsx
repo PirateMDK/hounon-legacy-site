@@ -131,6 +131,13 @@ export function CrudPanel({
                       className="w-full px-3 py-2 bg-input border border-border rounded text-ivory">
                       {f.options?.map((o) => <option key={o} value={o}>{o}</option>)}
                     </select>
+                  ) : f.type === "upload" ? (
+                    <UploadField
+                      value={String(editing[f.key] ?? "")}
+                      onChange={(url) => setEditing({ ...editing, [f.key]: url })}
+                      accept={f.accept ?? "image/*"}
+                      bucket={f.bucket ?? "media"}
+                    />
                   ) : (
                     <input type={f.type === "number" ? "number" : f.type === "date" ? "date" : "text"}
                       value={String(editing[f.key] ?? "")}
