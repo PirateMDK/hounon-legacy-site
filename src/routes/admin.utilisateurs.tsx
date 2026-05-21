@@ -75,10 +75,57 @@ function UsersAdmin() {
     qc.invalidateQueries({ queryKey: ["admin-users"] });
   };
 
+  const createUserFn = useServerFn(adminCreateUser);
+  const [showForm, setShowForm] = useState(false);
+  const [nu, setNu] = useState({ full_name: "", email: "", password: "", role: "editor", email_confirm: true });
+  const [creating, setCreating] = useState(false);
+  const submitCreate = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!iAmSuper) { toast.error("Réservé aux Super Administrateurs."); return; }
+    if (nu.password.length < 8) { toast.error("Mot de passe : 8 caractères minimum"); return; }
+    setCreating(true);
+    try {
+      await createUserFn({ data: nu });
+      toast.success("Utilisateur créé");
+      setNu({ full_name: "", email: "", password: "", role: "editor", email_confirm: true });
+      setShowForm(false);
+      qc.invalidateQueries({ queryKey: ["admin-users"] });
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : "Erreur");
+    } finally { setCreating(false); }
+  };
+
   return (
     <div>
-      <h1 className="font-display text-3xl text-gold mb-2">Utilisateurs</h1>
+      <div className="flex items-center justify-between flex-wrap gap-3 mb-2">
+        <h1 className="font-display text-3xl text-gold">Utilisateurs</h1>
+        {iAmSuper && (
+          <button onClick={() => setShowForm((v) => !v)} className="btn-primary text-sm inline-flex items-center gap-2">
+            <UserPlus size={16} /> {showForm ? "Annuler" : "Ajouter un utilisateur"}
+          </button>
+        )}
+      </div>
       <p className="text-sand mb-6">Chaque utilisateur a un seul rôle. Les Super Administrateurs ne peuvent pas être supprimés.</p>
+
+      {showForm && iAmSuper && (
+        <form onSubmit={submitCreate} className="sacred-card mb-6 space-y-3 border border-gold/40">
+          <h3 className="font-display text-xl text-gold">Nouvel utilisateur</h3>
+          <div className="grid md:grid-cols-2 gap-3">
+            <input required placeholder="Nom complet" value={nu.full_name} onChange={(e) => setNu({ ...nu, full_name: e.target.value })} className="px-3 py-2 bg-input border border-border rounded text-ivory" />
+            <input required type="email" placeholder="Email" value={nu.email} onChange={(e) => setNu({ ...nu, email: e.target.value })} className="px-3 py-2 bg-input border border-border rounded text-ivory" />
+            <input required type="password" placeholder="Mot de passe (min. 8)" value={nu.password} onChange={(e) => setNu({ ...nu, password: e.target.value })} className="px-3 py-2 bg-input border border-border rounded text-ivory" />
+            <select value={nu.role} onChange={(e) => setNu({ ...nu, role: e.target.value })} className="px-3 py-2 bg-input border border-border rounded text-ivory">
+              {ROLES.map((r) => <option key={r.value} value={r.value}>{r.icon} {r.label}</option>)}
+            </select>
+          </div>
+          <label className="flex items-center gap-2 text-sand text-sm">
+            <input type="checkbox" checked={nu.email_confirm} onChange={(e) => setNu({ ...nu, email_confirm: e.target.checked })} />
+            Email déjà confirmé (l'utilisateur pourra se connecter immédiatement)
+          </label>
+          <button type="submit" disabled={creating} className="btn-primary text-sm">{creating ? "Création…" : "Créer l'utilisateur"}</button>
+        </form>
+      )}
+
       <div className="space-y-3">
         {(data ?? []).map((u) => {
           const meta = roleMeta(u.role);
