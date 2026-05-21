@@ -1,8 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useServerFn } from "@tanstack/react-start";
 import { supabase } from "@/integrations/supabase/client";
+import { adminCreateUser } from "@/lib/admin-users.functions";
 import { toast } from "sonner";
-import { Trash2, Lock } from "lucide-react";
+import { Trash2, Lock, UserPlus } from "lucide-react";
+import { useState } from "react";
 
 export const Route = createFileRoute("/admin/utilisateurs")({
   component: UsersAdmin,
