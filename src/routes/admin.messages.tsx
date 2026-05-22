@@ -2,8 +2,14 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
-import { Trash2, Plus } from "lucide-react";
+import { Trash2, Plus, Mail, MessageCircle, Reply, X } from "lucide-react";
 import { useState } from "react";
+
+function normalizePhoneForWa(phone: string) {
+  // wa.me requires international format digits only (with leading + optional)
+  const cleaned = (phone || "").replace(/[^\d+]/g, "");
+  return cleaned.startsWith("+") ? cleaned : cleaned;
+}
 
 export const Route = createFileRoute("/admin/messages")({
   component: MessagesAdmin,
