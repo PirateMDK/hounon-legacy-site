@@ -93,13 +93,54 @@ function MessagesAdmin() {
                 <p className="text-sand text-xs">{m.email} · {m.phone} · {new Date(m.created_at).toLocaleString("fr-FR")}</p>
                 {m.service && <p className="text-gold text-sm mt-1">Service : {m.service}{m.preferred_date && ` · Date souhaitée : ${m.preferred_date}`}</p>}
               </div>
-              <div className="flex gap-2 items-start">
+              <div className="flex gap-2 items-start flex-wrap">
                 <span className={`text-xs px-2 py-1 rounded ${m.status === "nouveau" ? "bg-gold/30 text-gold" : "bg-secondary text-sand"}`}>{m.status}</span>
                 {m.status === "nouveau" && <button onClick={() => mark(m.id, "traite")} className="text-xs px-3 py-1 text-gold border border-gold/40 rounded">Marquer traité</button>}
+                <button
+                  onClick={() => setReplyOpen((s) => ({ ...s, [m.id]: !s[m.id] }))}
+                  className="text-xs px-3 py-1 text-gold border border-gold/40 rounded inline-flex items-center gap-1"
+                >
+                  {replyOpen[m.id] ? <X size={12} /> : <Reply size={12} />} Répondre
+                </button>
                 <button onClick={() => remove(m.id)} className="text-destructive"><Trash2 size={14} /></button>
               </div>
             </div>
             <p className="text-ivory mt-3 whitespace-pre-wrap">{m.message}</p>
+
+            {replyOpen[m.id] && (
+              <div className="mt-4 border-t border-gold/20 pt-4 space-y-3">
+                <textarea
+                  rows={4}
+                  placeholder={`Bonjour ${m.full_name?.split(" ")[0] || ""}, merci pour votre message…`}
+                  value={replyText[m.id] || ""}
+                  onChange={(e) => setReplyText((s) => ({ ...s, [m.id]: e.target.value }))}
+                  className="w-full px-3 py-2 bg-input border border-border rounded text-ivory"
+                />
+                <div className="flex flex-wrap gap-2">
+                  <a
+                    href={`mailto:${m.email}?subject=${encodeURIComponent(`Réponse à votre demande — Hounon Propre`)}&body=${encodeURIComponent(buildReplyBody(m, replyText[m.id] || ""))}`}
+                    onClick={() => { if (m.status === "nouveau") mark(m.id, "traite"); }}
+                    className="text-xs px-3 py-2 border border-gold/40 text-gold rounded inline-flex items-center gap-2 hover:bg-gold/10"
+                  >
+                    <Mail size={14} /> Envoyer par email
+                  </a>
+                  {m.phone && (
+                    <a
+                      href={`https://wa.me/${normalizePhoneForWa(m.phone)}?text=${encodeURIComponent(buildReplyBody(m, replyText[m.id] || ""))}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={() => { if (m.status === "nouveau") mark(m.id, "traite"); }}
+                      className="text-xs px-3 py-2 bg-[#25D366] text-black rounded inline-flex items-center gap-2 font-medium hover:opacity-90"
+                    >
+                      <MessageCircle size={14} /> Envoyer par WhatsApp
+                    </a>
+                  )}
+                </div>
+                <p className="text-sand/70 text-xs italic">
+                  Le message s'ouvre dans votre client mail ou directement dans WhatsApp. Le statut passe à « traité » à l'envoi.
+                </p>
+              </div>
+            )}
           </div>
         ))}
         {(data ?? []).length === 0 && <p className="text-sand italic">Aucun message.</p>}
