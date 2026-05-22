@@ -22,6 +22,11 @@ function MessagesAdmin() {
   const [showForm, setShowForm] = useState(false);
   const [f, setF] = useState(EMPTY);
   const [saving, setSaving] = useState(false);
+  const [replyOpen, setReplyOpen] = useState<Record<string, boolean>>({});
+  const [replyText, setReplyText] = useState<Record<string, string>>({});
+
+  const buildReplyBody = (m: any, text: string) =>
+    `${text}\n\n— Hounon Propre\n\n--- Message original ---\nDe : ${m.full_name} (${m.country})\nDate : ${new Date(m.created_at).toLocaleString("fr-FR")}\n\n${m.message}`;
 
   const { data } = useQuery({
     queryKey: ["admin-messages"],
