@@ -238,6 +238,79 @@ export type Database = {
         }
         Relationships: []
       }
+      message_followups: {
+        Row: {
+          created_at: string
+          created_by: string | null
+          done: boolean
+          id: string
+          message_id: string
+          note: string | null
+          remind_at: string
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string | null
+          done?: boolean
+          id?: string
+          message_id: string
+          note?: string | null
+          remind_at: string
+        }
+        Update: {
+          created_at?: string
+          created_by?: string | null
+          done?: boolean
+          id?: string
+          message_id?: string
+          note?: string | null
+          remind_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "message_followups_message_id_fkey"
+            columns: ["message_id"]
+            isOneToOne: false
+            referencedRelation: "messages"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      message_replies: {
+        Row: {
+          body: string
+          channel: string
+          created_at: string
+          id: string
+          message_id: string
+          sent_by: string | null
+        }
+        Insert: {
+          body: string
+          channel: string
+          created_at?: string
+          id?: string
+          message_id: string
+          sent_by?: string | null
+        }
+        Update: {
+          body?: string
+          channel?: string
+          created_at?: string
+          id?: string
+          message_id?: string
+          sent_by?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "message_replies_message_id_fkey"
+            columns: ["message_id"]
+            isOneToOne: false
+            referencedRelation: "messages"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       messages: {
         Row: {
           country: string
