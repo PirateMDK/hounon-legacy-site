@@ -55,10 +55,6 @@ function LoginPage() {
             {loading ? "Connexion…" : "Se connecter"}
           </button>
         </form>
-        <p className="text-xs text-sand/60 mt-6 text-center">
-          Identifiants par défaut : hounonpropre@gmail.com / default1234
-          <br />Pensez à changer le mot de passe après la première connexion.
-        </p>
         <p className="text-center mt-4"><Link to="/" className="text-sand hover:text-gold text-xs">← Retour au site</Link></p>
       </div>
     </div>

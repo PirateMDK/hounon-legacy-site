@@ -9,7 +9,14 @@
     "build:dev": "vite build --mode development",
     "preview": "vite preview",
     "lint": "eslint .",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "supabase:install": "npx supabase --version || npm install -g supabase",
+    "supabase:login": "npx supabase login",
+    "supabase:push": "npx supabase db push --project-ref dvgqbffipykrflkzsezj",
+    "supabase:seed": "npx supabase db seed --project-ref dvgqbffipykrflkzsezj",
+    "supabase:migrate:new": "npx supabase migration new",
+    "supabase:setup": "npm run supabase:install && npm run supabase:login",
+    "supabase:deploy": "npm run supabase:push && npm run supabase:seed"
   },
   "dependencies": {
     "@cloudflare/vite-plugin": "^1.25.5",
