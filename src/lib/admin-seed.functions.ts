@@ -21,11 +21,18 @@ export const ensureAdminSeeded = createServerFn({ method: "POST" }).handler(asyn
   }
   if (!userId) return { ok: false, error: "no user id" };
   // Ensure super_admin role
-  await supabaseAdmin.from("user_roles").upsert(
-    { user_id: userId, role: "super_admin" as never },
-    { onConflict: "user_id,role" }
-  );
+  const { error: roleError } = await supabaseAdmin
+    .from("user_roles")
+    .upsert({ user_id: userId, role: "super_admin" as never }, { onConflict: "user_id" });
+  if (roleError) return { ok: false, error: roleError.message };
+
   // Ensure profile
-  await supabaseAdmin.from("profiles").upsert({ id: userId, email: ADMIN_EMAIL, full_name: "Hounon Propre" });
+  const { error: profileError } = await supabaseAdmin.from("profiles").upsert({
+    id: userId,
+    email: ADMIN_EMAIL,
+    full_name: "Hounon Propre",
+  });
+  if (profileError) return { ok: false, error: profileError.message };
+
   return { ok: true };
 });

@@ -10,12 +10,19 @@ export const Route = createFileRoute("/admin")({
 function AdminShell() {
   const { pathname } = useLocation();
   if (pathname === "/admin/login") {
-    return (<><Toaster theme="dark" position="top-center" /><Outlet /></>);
+    return (
+      <>
+        <Toaster theme="dark" position="top-center" />
+        <Outlet />
+      </>
+    );
   }
   return (
     <>
       <Toaster theme="dark" position="top-center" />
-      <AdminLayout><Outlet /></AdminLayout>
+      <AdminLayout>
+        <Outlet />
+      </AdminLayout>
     </>
   );
 }

@@ -1,7 +1,9 @@
 # Supabase CLI et déploiement
 
 ## Objectif
+
 Cette documentation explique comment installer et utiliser le CLI Supabase pour :
+
 - se connecter au projet Supabase
 - pousser les migrations
 - lancer les seeds
@@ -62,6 +64,9 @@ npm run supabase:push
 ```bash
 npm run supabase:seed
 ```
+
+> Note : avec la version actuelle du CLI, la commande de seed est limitée aux buckets de stockage.
+> Si votre projet n’utilise pas de `storage.buckets`, ce script peut rester sans effet.
 
 ### 5. Tout faire d’un coup
 

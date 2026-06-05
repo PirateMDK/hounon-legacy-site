@@ -17,7 +17,11 @@ export type FieldDef = {
 type Row = Record<string, unknown> & { id: string };
 
 export function CrudPanel({
-  title, table, fields, orderBy = "sort_order", filter,
+  title,
+  table,
+  fields,
+  orderBy = "sort_order",
+  filter,
 }: {
   title: string;
   table: string;
@@ -31,7 +35,10 @@ export function CrudPanel({
   const { data: rows, isLoading } = useQuery({
     queryKey: ["admin", table, filter?.value],
     queryFn: async () => {
-      let q = supabase.from(table as never).select("*").order(orderBy as never, { ascending: true });
+      let q = supabase
+        .from(table as never)
+        .select("*")
+        .order(orderBy as never, { ascending: true });
       if (filter) q = q.eq(filter.column as never, filter.value as never);
       const { data, error } = await q;
       if (error) throw error;
@@ -41,7 +48,9 @@ export function CrudPanel({
 
   const startNew = () => {
     const r: Row = { id: "" };
-    fields.forEach((f) => { r[f.key] = f.defaultValue ?? (f.type === "boolean" ? true : f.type === "number" ? 0 : ""); });
+    fields.forEach((f) => {
+      r[f.key] = f.defaultValue ?? (f.type === "boolean" ? true : f.type === "number" ? 0 : "");
+    });
     if (filter) r[filter.column] = filter.value;
     setEditing(r);
   };
@@ -58,11 +67,17 @@ export function CrudPanel({
     if (filter) payload[filter.column] = filter.value;
     let err;
     if (editing.id) {
-      ({ error: err } = await supabase.from(table as never).update(payload as never).eq("id", editing.id));
+      ({ error: err } = await supabase
+        .from(table as never)
+        .update(payload as never)
+        .eq("id", editing.id));
     } else {
       ({ error: err } = await supabase.from(table as never).insert(payload as never));
     }
-    if (err) { toast.error(err.message); return; }
+    if (err) {
+      toast.error(err.message);
+      return;
+    }
     toast.success("Enregistré");
     setEditing(null);
     qc.invalidateQueries({ queryKey: ["admin", table] });
@@ -70,16 +85,28 @@ export function CrudPanel({
 
   const remove = async (id: string) => {
     if (!confirm("Supprimer définitivement ?")) return;
-    const { error } = await supabase.from(table as never).delete().eq("id", id);
-    if (error) { toast.error(error.message); return; }
+    const { error } = await supabase
+      .from(table as never)
+      .delete()
+      .eq("id", id);
+    if (error) {
+      toast.error(error.message);
+      return;
+    }
     toast.success("Supprimé");
     qc.invalidateQueries({ queryKey: ["admin", table] });
   };
 
   const toggleVisible = async (r: Row) => {
     if (!("visible" in r)) return;
-    const { error } = await supabase.from(table as never).update({ visible: !r.visible } as never).eq("id", r.id);
-    if (error) { toast.error(error.message); return; }
+    const { error } = await supabase
+      .from(table as never)
+      .update({ visible: !r.visible } as never)
+      .eq("id", r.id);
+    if (error) {
+      toast.error(error.message);
+      return;
+    }
     qc.invalidateQueries({ queryKey: ["admin", table] });
   };
 
@@ -87,25 +114,50 @@ export function CrudPanel({
     <div>
       <div className="flex items-center justify-between mb-6">
         <h2 className="font-display text-2xl text-gold">{title}</h2>
-        <button onClick={startNew} className="btn-primary text-sm"><Plus size={14} /> Ajouter</button>
+        <button onClick={startNew} className="btn-primary text-sm">
+          <Plus size={14} /> Ajouter
+        </button>
       </div>
 
-      {isLoading ? <p className="text-sand">Chargement…</p> : (
+      {isLoading ? (
+        <p className="text-sand">Chargement…</p>
+      ) : (
         <div className="space-y-2">
           {(rows ?? []).map((r) => (
-            <div key={r.id} className="flex items-center justify-between gap-3 p-3 bg-card border border-border rounded">
+            <div
+              key={r.id}
+              className="flex items-center justify-between gap-3 p-3 bg-card border border-border rounded"
+            >
               <div className="flex-1 min-w-0">
-                <p className="text-ivory font-medium truncate">{String(r[fields[0].key] ?? "(sans titre)")}</p>
-                {fields[1] && <p className="text-sand text-xs truncate">{String(r[fields[1].key] ?? "")}</p>}
+                <p className="text-ivory font-medium truncate">
+                  {String(r[fields[0].key] ?? "(sans titre)")}
+                </p>
+                {fields[1] && (
+                  <p className="text-sand text-xs truncate">{String(r[fields[1].key] ?? "")}</p>
+                )}
               </div>
               <div className="flex gap-1">
                 {"visible" in r && (
-                  <button onClick={() => toggleVisible(r)} className="p-2 hover:text-gold text-sand" title="Visibilité">
+                  <button
+                    onClick={() => toggleVisible(r)}
+                    className="p-2 hover:text-gold text-sand"
+                    title="Visibilité"
+                  >
                     {r.visible ? <Eye size={16} /> : <EyeOff size={16} />}
                   </button>
                 )}
-                <button onClick={() => setEditing(r)} className="text-gold text-xs px-3 hover:underline">Modifier</button>
-                <button onClick={() => remove(r.id)} className="p-2 text-destructive hover:text-earth-red"><Trash2 size={16} /></button>
+                <button
+                  onClick={() => setEditing(r)}
+                  className="text-gold text-xs px-3 hover:underline"
+                >
+                  Modifier
+                </button>
+                <button
+                  onClick={() => remove(r.id)}
+                  className="p-2 text-destructive hover:text-earth-red"
+                >
+                  <Trash2 size={16} />
+                </button>
               </div>
             </div>
           ))}
@@ -116,20 +168,37 @@ export function CrudPanel({
       {editing && (
         <div className="fixed inset-0 bg-black/70 z-50 flex items-center justify-center p-4 overflow-y-auto">
           <div className="bg-card border border-gold/40 rounded-lg w-full max-w-2xl p-6 my-8">
-            <h3 className="font-display text-gold text-xl mb-4">{editing.id ? "Modifier" : "Ajouter"}</h3>
+            <h3 className="font-display text-gold text-xl mb-4">
+              {editing.id ? "Modifier" : "Ajouter"}
+            </h3>
             <div className="space-y-3 max-h-[60vh] overflow-y-auto pr-2">
               {fields.map((f) => (
                 <div key={f.key}>
                   <label className="block text-sm text-sand mb-1">{f.label}</label>
                   {f.type === "textarea" ? (
-                    <textarea value={String(editing[f.key] ?? "")} onChange={(e) => setEditing({ ...editing, [f.key]: e.target.value })}
-                      rows={5} className="w-full px-3 py-2 bg-input border border-border rounded text-ivory" />
+                    <textarea
+                      value={String(editing[f.key] ?? "")}
+                      onChange={(e) => setEditing({ ...editing, [f.key]: e.target.value })}
+                      rows={5}
+                      className="w-full px-3 py-2 bg-input border border-border rounded text-ivory"
+                    />
                   ) : f.type === "boolean" ? (
-                    <input type="checkbox" checked={Boolean(editing[f.key])} onChange={(e) => setEditing({ ...editing, [f.key]: e.target.checked })} />
+                    <input
+                      type="checkbox"
+                      checked={Boolean(editing[f.key])}
+                      onChange={(e) => setEditing({ ...editing, [f.key]: e.target.checked })}
+                    />
                   ) : f.type === "select" ? (
-                    <select value={String(editing[f.key] ?? "")} onChange={(e) => setEditing({ ...editing, [f.key]: e.target.value })}
-                      className="w-full px-3 py-2 bg-input border border-border rounded text-ivory">
-                      {f.options?.map((o) => <option key={o} value={o}>{o}</option>)}
+                    <select
+                      value={String(editing[f.key] ?? "")}
+                      onChange={(e) => setEditing({ ...editing, [f.key]: e.target.value })}
+                      className="w-full px-3 py-2 bg-input border border-border rounded text-ivory"
+                    >
+                      {f.options?.map((o) => (
+                        <option key={o} value={o}>
+                          {o}
+                        </option>
+                      ))}
                     </select>
                   ) : f.type === "upload" ? (
                     <UploadField
@@ -139,17 +208,23 @@ export function CrudPanel({
                       bucket={f.bucket ?? "media"}
                     />
                   ) : (
-                    <input type={f.type === "number" ? "number" : f.type === "date" ? "date" : "text"}
+                    <input
+                      type={f.type === "number" ? "number" : f.type === "date" ? "date" : "text"}
                       value={String(editing[f.key] ?? "")}
                       onChange={(e) => setEditing({ ...editing, [f.key]: e.target.value })}
-                      className="w-full px-3 py-2 bg-input border border-border rounded text-ivory" />
+                      className="w-full px-3 py-2 bg-input border border-border rounded text-ivory"
+                    />
                   )}
                 </div>
               ))}
             </div>
             <div className="flex gap-3 mt-6 justify-end">
-              <button onClick={() => setEditing(null)} className="btn-outline text-sm">Annuler</button>
-              <button onClick={save} className="btn-primary text-sm"><Save size={14} /> Enregistrer</button>
+              <button onClick={() => setEditing(null)} className="btn-outline text-sm">
+                Annuler
+              </button>
+              <button onClick={save} className="btn-primary text-sm">
+                <Save size={14} /> Enregistrer
+              </button>
             </div>
           </div>
         </div>
@@ -158,14 +233,26 @@ export function CrudPanel({
   );
 }
 
-function UploadField({ value, onChange, accept, bucket }: { value: string; onChange: (url: string) => void; accept: string; bucket: string }) {
+function UploadField({
+  value,
+  onChange,
+  accept,
+  bucket,
+}: {
+  value: string;
+  onChange: (url: string) => void;
+  accept: string;
+  bucket: string;
+}) {
   const [busy, setBusy] = useState(false);
   const onFile = async (file: File) => {
     setBusy(true);
     try {
       const ext = file.name.split(".").pop() || "bin";
       const path = `uploads/${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ext}`;
-      const { error } = await supabase.storage.from(bucket).upload(path, file, { upsert: false, contentType: file.type });
+      const { error } = await supabase.storage
+        .from(bucket)
+        .upload(path, file, { upsert: false, contentType: file.type });
       if (error) throw error;
       const { data } = supabase.storage.from(bucket).getPublicUrl(path);
       onChange(data.publicUrl);
@@ -179,22 +266,34 @@ function UploadField({ value, onChange, accept, bucket }: { value: string; onCha
   const isVideo = accept.includes("video");
   return (
     <div className="space-y-2">
-      {value && (
-        isVideo ? (
+      {value &&
+        (isVideo ? (
           <video src={value} className="max-h-40 rounded border border-border" controls />
         ) : (
           <img src={value} alt="" className="max-h-40 rounded border border-border" />
-        )
-      )}
+        ))}
       <div className="flex gap-2 items-center">
         <label className="inline-flex items-center gap-2 px-3 py-2 bg-input border border-border rounded text-sand text-sm cursor-pointer hover:border-gold">
           {busy ? <Loader2 size={14} className="animate-spin" /> : <Upload size={14} />}
           {busy ? "Import…" : "Importer un fichier"}
-          <input type="file" accept={accept} className="hidden" disabled={busy}
-            onChange={(e) => { const f = e.target.files?.[0]; if (f) onFile(f); e.target.value = ""; }} />
+          <input
+            type="file"
+            accept={accept}
+            className="hidden"
+            disabled={busy}
+            onChange={(e) => {
+              const f = e.target.files?.[0];
+              if (f) onFile(f);
+              e.target.value = "";
+            }}
+          />
         </label>
-        <input value={value} onChange={(e) => onChange(e.target.value)} placeholder="ou collez une URL"
-          className="flex-1 px-3 py-2 bg-input border border-border rounded text-ivory text-sm" />
+        <input
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          placeholder="ou collez une URL"
+          className="flex-1 px-3 py-2 bg-input border border-border rounded text-ivory text-sm"
+        />
       </div>
     </div>
   );

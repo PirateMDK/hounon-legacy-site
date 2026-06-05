@@ -5,7 +5,16 @@ import Page from "@/components/Page";
 import PromoBanner from "@/components/PromoBanner";
 
 export const Route = createFileRoute("/services")({
-  head: () => ({ meta: [{ title: "Services — Hounon Propre" }, { name: "description", content: "Consultation du Fâ, rituels d'amour, protection, guérison, prospérité. Disponible dans le monde entier." }] }),
+  head: () => ({
+    meta: [
+      { title: "Services — Hounon Propre" },
+      {
+        name: "description",
+        content:
+          "Consultation du Fâ, rituels d'amour, protection, guérison, prospérité. Disponible dans le monde entier.",
+      },
+    ],
+  }),
   component: ServicesPage,
 });
 
@@ -13,7 +22,11 @@ function ServicesPage() {
   const { data: services } = useQuery({
     queryKey: ["services"],
     queryFn: async () => {
-      const { data } = await supabase.from("services").select("*").eq("visible", true).order("sort_order");
+      const { data } = await supabase
+        .from("services")
+        .select("*")
+        .eq("visible", true)
+        .order("sort_order");
       return data ?? [];
     },
   });
@@ -34,7 +47,9 @@ function ServicesPage() {
               <div className="text-5xl mb-4">{s.icon}</div>
               <h3 className="font-display text-2xl text-gold mb-3">{s.title}</h3>
               <p className="text-ivory/90 mb-6">{s.description}</p>
-              <Link to="/contact" className="btn-outline">Prendre Rendez-vous</Link>
+              <Link to="/contact" className="btn-outline">
+                Prendre Rendez-vous
+              </Link>
             </div>
           ))}
         </div>

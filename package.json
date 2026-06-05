@@ -10,12 +10,12 @@
     "preview": "vite preview",
     "lint": "eslint .",
     "format": "prettier --write .",
-    "supabase:install": "npx supabase --version || npm install -g supabase",
+    "supabase:install": "npx supabase --version",
     "supabase:login": "npx supabase login",
-    "supabase:push": "npx supabase db push --project-ref dvgqbffipykrflkzsezj",
-    "supabase:seed": "npx supabase db seed --project-ref dvgqbffipykrflkzsezj",
+    "supabase:push": "npx supabase db push --linked",
+    "supabase:seed": "npx supabase seed buckets --linked",
     "supabase:migrate:new": "npx supabase migration new",
-    "supabase:setup": "npm run supabase:install && npm run supabase:login",
+    "supabase:setup": "npm run supabase:login",
     "supabase:deploy": "npm run supabase:push && npm run supabase:seed"
   },
   "dependencies": {
@@ -88,6 +88,7 @@
     "eslint-plugin-react-refresh": "^0.4.20",
     "globals": "^15.15.0",
     "prettier": "^3.7.3",
+    "supabase": "^2.104.0",
     "typescript": "^5.8.3",
     "typescript-eslint": "^8.56.1",
     "vite": "^7.3.1"

@@ -16,7 +16,9 @@ function NotFoundComponent() {
         <h2 className="mt-4 text-xl font-display text-ivory">Page introuvable</h2>
         <p className="mt-2 text-sand">Cette page n'existe pas ou a été déplacée.</p>
         <div className="mt-6">
-          <Link to="/" className="btn-primary">Retour à l'accueil</Link>
+          <Link to="/" className="btn-primary">
+            Retour à l'accueil
+          </Link>
         </div>
       </div>
     </div>
@@ -29,7 +31,9 @@ function ErrorComponent({ error }: { error: Error }) {
       <div className="max-w-md text-center">
         <h1 className="font-display text-2xl text-gold">Une erreur est survenue</h1>
         <p className="mt-2 text-sand text-sm">{error.message}</p>
-        <a href="/" className="btn-primary mt-6">Accueil</a>
+        <a href="/" className="btn-primary mt-6">
+          Accueil
+        </a>
       </div>
     </div>
   );
@@ -41,9 +45,16 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: "Hounon Propre — Maître Spirituel & Guérisseur Vodoun" },
-      { name: "description", content: "KINWAHO HOUNGUEVI DJIMA, dit Hounon Propre. Maître spirituel vodoun, guérisseur traditionnel basé au Bénin. Services dans le monde entier." },
+      {
+        name: "description",
+        content:
+          "KINWAHO HOUNGUEVI DJIMA, dit Hounon Propre. Maître spirituel vodoun, guérisseur traditionnel basé au Bénin. Services dans le monde entier.",
+      },
       { property: "og:title", content: "Hounon Propre — Maître Spirituel Vodoun" },
-      { property: "og:description", content: "Consultations, rituels, formations. Disponible dans le monde entier." },
+      {
+        property: "og:description",
+        content: "Consultations, rituels, formations. Disponible dans le monde entier.",
+      },
       { property: "og:type", content: "website" },
     ],
     links: [{ rel: "stylesheet", href: appCss }],
@@ -57,7 +68,9 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 function RootShell({ children }: { children: React.ReactNode }) {
   return (
     <html lang="fr">
-      <head><HeadContent /></head>
+      <head>
+        <HeadContent />
+      </head>
       <body>
         {children}
         <Scripts />

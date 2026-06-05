@@ -16,10 +16,7 @@ export function useAdminSession() {
         if (mounted) setState({ loading: false, userId: null, email: null, isStaff: false });
         return;
       }
-      const { data } = await supabase
-        .from("user_roles")
-        .select("role")
-        .eq("user_id", uid);
+      const { data } = await supabase.from("user_roles").select("role").eq("user_id", uid);
       const roles = (data ?? []).map((r) => r.role);
       const isStaff = roles.includes("super_admin" as never) || roles.includes("editor" as never);
       if (mounted) setState({ loading: false, userId: uid, email, isStaff });
