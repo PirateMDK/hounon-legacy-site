@@ -14,7 +14,7 @@ export const Route = createFileRoute("/admin/login")({
 function LoginPage() {
   const navigate = useNavigate();
   const seed = useServerFn(ensureAdminSeeded);
-  const [email, setEmail] = useState("hounonpropre@gmail.com");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
